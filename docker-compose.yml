@@ -1,0 +1,112 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: easycab
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - easycab_network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  ec_central:
+    build:
+      context: ./EC_Central
+      dockerfile: Dockerfile
+    image: ec-central:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/easycab
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SERVER_PORT: 8081
+    depends_on:
+      - postgres
+      - kafka
+    ports:
+      - "8081:8081"
+    networks:
+      - easycab_network
+
+  ec_de:
+    build:
+      context: .
+      dockerfile: ./EC_DE/Dockerfile
+    image: ec-de:latest
+    environment:
+      SPRING_APPLICATION_NAME: EC_DE
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_IP}:9092
+      CENTRAL_IP: ${CENTRAL_IP}
+      CENTRAL_PORT: 8081
+      TAXI_ID: 1
+    ports:
+      - "8082:8082"
+    networks:
+      - easycab_network
+
+  ec_customer:
+    build:
+      context: ./EC_Customer
+      dockerfile: Dockerfile
+    image: ec-customer:latest
+    environment:
+      SPRING_APPLICATION_NAME: EC_Customer
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_IP}:9092
+      CLIENT_ID: client_1
+      broker.address: $SPRING_KAFKA_BOOTSTRAP_SERVERS
+      file: destinations2.txt
+    ports:
+      - "8084:8084"
+    networks:
+      - easycab_network
+
+  ec_s:
+    build:
+      context: ./EC_S
+      dockerfile: Dockerfile
+    image: ec-s:latest
+    environment:
+      SPRING_APPLICATION_NAME: EC_S
+      SENSOR_IP: ${SENSOR_IP}
+      SENSOR_PORT: ${SENSOR_PORT}
+    entrypoint: [ "java", "-jar", "/app/ECS.jar", "${SENSOR_IP}", "${SENSOR_PORT}" ]
+    ports:
+      - "8083:8083"
+    networks:
+      - easycab_network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_IP}:9092
+      KAFKA_ZOOKEEPER_CONNECT: ${ZOOKEEPER_IP}:2181
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    ports:
+      - "9092:9092"
+    networks:
+      - easycab_network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    networks:
+      - easycab_network
+
+networks:
+  easycab_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

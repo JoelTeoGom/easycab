@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Taxi Tracker</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 500px;
+            height: 500px;
+        }
+        td {
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            border: 1px solid black;
+        }
+        .taxi-moving {
+            background-color: green;
+        }
+        .taxi-stopped {
+            background-color: red;
+        }
+        .destination {
+            background-color: blue;
+        }
+        .customer {
+            background-color: yellow;
+        }
+        .empty {
+            background-color: white;
+        }
+    </style>
+
+    <!-- Agregar las librerías SockJS y Stomp.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h1>Taxi Tracker - Mapa 20x20</h1>
+<table id="cityMap">
+    <!-- Tabla 20x20 generada dinámicamente -->
+</table>
+
+<script>
+    const mapSize = 20;
+    const cityMap = document.getElementById('cityMap');
+
+    // Generar tabla 20x20
+    for (let i = 0; i < mapSize; i++) {
+        let row = cityMap.insertRow();
+        for (let j = 0; j < mapSize; j++) {
+            let cell = row.insertCell();
+            cell.classList.add('empty');  // Inicialmente todas las celdas están vacías
+        }
+    }
+
+    // Función para actualizar una celda con el estado del taxi, cliente o destino
+    function updateCell(x, y, type, id = null) {
+        const cell = cityMap.rows[x].cells[y];
+        cell.className = '';  // Elimina todas las clases
+        if (type === 'taxi-moving') {
+            cell.classList.add('taxi-moving');
+            cell.textContent = 'T' + (id !== null ? id : '');  // Representar el taxi con una "T" y su ID opcional
+        } else if (type === 'taxi-stopped') {
+            cell.classList.add('taxi-stopped');
+            cell.textContent = 'T' + (id !== null ? id : '');
+        } else if (type === 'destination') {
+            cell.classList.add('destination');
+            cell.textContent = 'D';  // Representar un destino con "D"
+        } else if (type === 'customer') {
+            cell.classList.add('customer');
+            cell.textContent = 'C';  // Representar un cliente con "C"
+        } else {
+            cell.classList.add('empty');
+            cell.textContent = '';  // Celda vacía
+        }
+    }
+
+    // Configuración del WebSocket
+    let stompClient = null;
+
+    function connect() {
+        const socket = new SockJS('/ws');  // Asegúrate de que este endpoint coincida con tu configuración en el backend
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            console.log('Conectado: ' + frame);
+
+            // Suscribirse al tópico donde se envían las coordenadas de los taxis
+            stompClient.subscribe('/topic/taxi-coordinates', function (message) {
+                const taxiData = JSON.parse(message.body);
+
+                // Supongamos que taxiData es un objeto con {id, x, y, status}
+                // Primero, limpiar la celda anterior si es necesario
+                if (taxiData.previousX !== undefined && taxiData.previousY !== undefined) {
+                    updateCell(taxiData.previousX, taxiData.previousY, 'empty');
+                }
+
+                // Actualizar la nueva posición del taxi
+                updateCell(
+                    taxiData.x,
+                    taxiData.y,
+                    taxiData.status === 'OK' ? 'taxi-moving' : 'taxi-stopped',
+                    taxiData.id
+                );
+            });
+
+        });
+    }
+
+    // Llamar a connect() cuando la página cargue
+    window.onload = function() {
+        connect();
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="EC_S" />
+        <module name="EC_Customer" />
+        <module name="ec-central" />
+        <module name="EC_DE" />
+        <module name="EC_Central" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="EC_Central" options="-parameters" />
+      <module name="EC_Customer" options="-parameters" />
+      <module name="EC_DE" options="-parameters" />
+      <module name="EC_S" options="-parameters" />
+      <module name="easycab" options="" />
+      <module name="ec-central" options="-parameters" />
+    </option>
+  </component>
+</project>
