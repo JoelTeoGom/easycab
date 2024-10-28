@@ -1,10 +1,10 @@
 package org.example.ec_central.service;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.example.ec_central.model.ConnectedTaxis;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Service class for handling client (taxi) connections and interactions.
+ */
 @Service
 @Slf4j
 @Getter
@@ -26,14 +29,24 @@ public class ClientHandler {
     private final ConcurrentHashMap<String, Socket> connectedTaxis = new ConcurrentHashMap<>();
     private final KafkaAdmin kafkaAdmin;
 
-
+    /**
+     * Constructs a new ClientHandler with the specified dependencies.
+     *
+     * @param taxiService the service for handling taxi-related operations
+     * @param messageHandler the handler for processing messages
+     * @param kafkaAdmin the Kafka admin for managing topics
+     */
     public ClientHandler(TaxiService taxiService, MessageHandler messageHandler, @Qualifier("kafkaAdmin") KafkaAdmin kafkaAdmin) {
         this.taxiService = taxiService;
         this.messageHandler = messageHandler;
         this.kafkaAdmin = kafkaAdmin;
     }
 
-    // Método para manejar la interacción con el taxi
+    /**
+     * Handles the connection with a taxi.
+     *
+     * @param taxiSocket the socket representing the taxi connection
+     */
     public void handleTaxiConnection(Socket taxiSocket) {
         try (DataInputStream inputStream = new DataInputStream(taxiSocket.getInputStream());
              DataOutputStream outputStream = new DataOutputStream(taxiSocket.getOutputStream())) {
@@ -41,12 +54,13 @@ public class ClientHandler {
             log.info("Received authentication message: {}", authMessage);
 
             if (messageHandler.isValidAuthentication(authMessage)) {
-                outputStream.writeUTF(messageHandler.buildAck(true)); // Responder con ACK si autenticación exitosa
+                outputStream.writeUTF(messageHandler.buildAck(true)); // Respond with ACK if authentication is successful
                 log.info("Taxi authenticated successfully.");
 
                 String id = authMessage.split("#")[1];
+                log.info("Updating connected taxis, current connected taxis: {}", connectedTaxis.values().stream().map(Socket::getInetAddress).toList());
                 connectedTaxis.put(id, taxiSocket);
-
+                log.info("Connected taxis updated, current connected taxis: {}", connectedTaxis.values().stream().map(Socket::getInetAddress).toList());
                 String topicName = "taxi-start-service-" + id;
                 NewTopic newTopic = new NewTopic(topicName, 1, (short) 1);
                 kafkaAdmin.createOrModifyTopics(newTopic);
@@ -57,7 +71,7 @@ public class ClientHandler {
 
                 connectedTaxis.remove(id);
             } else {
-                outputStream.writeUTF(messageHandler.buildAck(false)); // Responder con NACK si autenticación fallida
+                outputStream.writeUTF(messageHandler.buildAck(false)); // Respond with NACK if authentication fails
                 log.error("Taxi authentication failed.");
             }
 
@@ -66,7 +80,14 @@ public class ClientHandler {
         }
     }
 
-    // Método para manejar solicitudes de taxis autenticados
+    /**
+     * Handles requests from authenticated taxis.
+     *
+     * @param inputStream the input stream to read requests from
+     * @param outputStream the output stream to send responses to
+     * @param id the identifier of the taxi
+     * @throws IOException if an I/O error occurs
+     */
     private void handleTaxiRequests(DataInputStream inputStream, DataOutputStream outputStream, String id) throws IOException {
         String request;
 

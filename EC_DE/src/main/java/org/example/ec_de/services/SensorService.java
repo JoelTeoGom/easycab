@@ -3,7 +3,8 @@ package org.example.ec_de.services;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.example.ec_de.model.SensorStatus;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.ec_de.model.TaxiState;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,40 +13,69 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Service class for handling sensor data reception and processing.
+ */
 @Service
 @Slf4j
 public class SensorService {
+    /**
+     * KafkaService instance for publishing sensor data.
+     */
     private final KafkaService kafkaService;
-    private ServerSocket serverSocket;
-    private Socket socket;
-    private final KafkaService kafka;
 
-    public SensorService(KafkaService kafka, KafkaService kafkaService) {
-        this.kafka = kafka;
+    /**
+     * ServerSocket for listening to sensor connections.
+     */
+    private ServerSocket serverSocket;
+
+    /**
+     * Socket for handling individual sensor connections.
+     */
+    private Socket socket;
+
+    /**
+     * Port number for the sensor server, injected from application properties.
+     */
+    @Value("${sensor.port}")
+    private int sensorPort;
+
+    /**
+     * Constructor for SensorService.
+     *
+     * @param kafkaService the KafkaService instance for publishing sensor data
+     */
+    public SensorService(KafkaService kafkaService) {
         this.kafkaService = kafkaService;
     }
 
+    /**
+     * Initializes the sensor data reception process.
+     * This method is called after the bean is constructed.
+     */
     @PostConstruct
     public void startReceiving() {
-        // Ejecutar la recepción en un hilo separado
+        // Execute the reception in a separate thread
         new Thread(() -> {
             try {
-                serverSocket = new ServerSocket(6969);
+                serverSocket = new ServerSocket(sensorPort);
                 log.info("Waiting for a connection...");
                 while (true) {
-                    socket = serverSocket.accept(); // Esperar a que un cliente se conecte
+                    socket = serverSocket.accept(); // Wait for a client to connect
                     log.info("Client connected: {}", socket.getInetAddress());
 
-                    // Escuchar mensajes entrantes
+                    // Listen for incoming messages
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     String inputLine;
                     while ((inputLine = in.readLine()) != null) {
-                        kafkaService.getShortestPathFinder().setStop(!inputLine.equals(SensorStatus.OK.name()));
+                        if (!inputLine.equals(SensorStatus.OK.name())) {
+                            kafkaService.getShortestPathFinder().setTaxiState(TaxiState.STOPPED);
+                        }
                         log.info("Received: {}", inputLine);
                     }
                 }
             } catch (IOException e) {
-                log.error("Error al recibir datos del sensor");
+                log.error("Error receiving sensor data");
                 e.printStackTrace();
             } finally {
                 closeConnection();
@@ -53,6 +83,9 @@ public class SensorService {
         }).start();
     }
 
+    /**
+     * Closes the sensor connection.
+     */
     public void closeConnection() {
         try {
             if (socket != null) {
@@ -62,7 +95,7 @@ public class SensorService {
                 serverSocket.close();
             }
         } catch (IOException e) {
-            log.error("Error al cerrar la conexión");
+            log.error("Error closing the connection");
             e.printStackTrace();
         }
     }

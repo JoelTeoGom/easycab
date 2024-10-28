@@ -1,6 +1,7 @@
 package org.example.ec_s;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,8 +12,15 @@ import java.util.Scanner;
 @Slf4j
 public class EC_S implements CommandLineRunner {
 
+    @Value("${de.ip}")
+    private String deIp;
+
+    @Value("${de.port}")
+    private int dePort;
+
     private SensorSocketClient sensorClient;
     private boolean running = true;
+    private boolean incidencia = false;
 
     public static void main(String[] args) {
         SpringApplication.run(EC_S.class, args);
@@ -20,20 +28,24 @@ public class EC_S implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (args.length < 2) {
-            log.warn("Por favor, proporciona la IP y el puerto del Digital Engine (EC_DE).");
+        if (deIp == null || deIp.isEmpty() || dePort == 0) {
+            log.warn("Por favor, configura las variables de entorno 'de.ip' y 'de.port'.");
             return;
         }
-        log.info("Using socket IP: {}", args[0]);
-        log.info("Listening on port {}", args[1]);
-        String ip = args[0];
-        int port = Integer.parseInt(args[1]);
+        log.info("Using socket IP: {}", deIp);
+        log.info("Listening on port {}", dePort);
 
-        sensorClient = new SensorSocketClient(ip, port);
+        sensorClient = new SensorSocketClient(deIp, dePort);
 
         new Thread(() -> {
             while (running) {
-                sensorClient.sendSensorData(SensorStatus.OK.name());
+                if (incidencia) {
+                    sensorClient.sendSensorData(SensorStatus.KO.name());
+                    log.info("Enviado KO");
+                } else {
+                    sensorClient.sendSensorData(SensorStatus.OK.name());
+                    log.info("Enviado OK");
+                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -43,7 +55,6 @@ public class EC_S implements CommandLineRunner {
             }
         }).start();
 
-        // Escuchar la entrada del usuario para simular incidencias
         listenForIncidents();
     }
 
@@ -53,7 +64,7 @@ public class EC_S implements CommandLineRunner {
         while (running) {
             String input = scanner.nextLine();
             if ("i".equalsIgnoreCase(input)) {
-                sensorClient.sendSensorData(SensorStatus.KO.name());
+                incidencia = !incidencia;
                 log.info("Incidencia simulada: KO enviado.");
             } else if ("q".equalsIgnoreCase(input)) {
                 running = false;

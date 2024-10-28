@@ -19,8 +19,6 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     bootstrap-servers: localhost:9092
 
-server:
-  port: 8081
 
 locations:
   file:

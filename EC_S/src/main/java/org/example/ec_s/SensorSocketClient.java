@@ -6,21 +6,47 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Client class for handling socket communication with a sensor server.
+ */
 @Slf4j
 public class SensorSocketClient {
 
+    /**
+     * The host address of the sensor server.
+     */
     private String host;
+
+    /**
+     * The port number of the sensor server.
+     */
     private int port;
+
+    /**
+     * The socket for the connection to the sensor server.
+     */
     private Socket socket;
+
+    /**
+     * The PrintWriter for sending data to the sensor server.
+     */
     private PrintWriter out;  // Mantener una referencia a PrintWriter
 
+    /**
+     * Constructor for SensorSocketClient.
+     *
+     * @param host the host address of the sensor server
+     * @param port the port number of the sensor server
+     */
     public SensorSocketClient(String host, int port) {
         this.host = host;
         this.port = port;
         this.establishConnection();
     }
 
-    // Establecer conexión
+    /**
+     * Establishes a connection to the sensor server.
+     */
     private void establishConnection() {
         try {
             this.socket = new Socket(host, port);
@@ -32,7 +58,11 @@ public class SensorSocketClient {
         }
     }
 
-    // Enviar datos del sensor
+    /**
+     * Sends sensor data to the sensor server.
+     *
+     * @param data the sensor data to send
+     */
     public void sendSensorData(String data) {
         try {
             // Verificar si el socket está cerrado o no es válido
@@ -50,7 +80,9 @@ public class SensorSocketClient {
         }
     }
 
-    // Cerrar el socket y PrintWriter
+    /**
+     * Closes the socket and PrintWriter.
+     */
     public void close() {
         try {
             if (this.out != null) {

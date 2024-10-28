@@ -1,17 +1,18 @@
 package org.example.ec_central.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.example.ec_central.model.ConnectedTaxis;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.net.UnknownHostException;
 
+/**
+ * Service class for handling the central socket server operations.
+ */
 @Service
 @Slf4j
 public class ECCentralSocketServer {
@@ -20,24 +21,31 @@ public class ECCentralSocketServer {
     private final ClientHandler clientHandler;
     private int lastTaxi = 0;
 
+    /**
+     * Constructs a new ECCentralSocketServer with the specified client handler.
+     *
+     * @param clientHandler the handler for managing client (taxi) connections
+     */
     public ECCentralSocketServer(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
-
-        startServer();
     }
 
-    public void startServer() {
+    /**
+     * Starts the central server to listen for incoming taxi connections.
+     */
+    @PostConstruct
+    public void startServer() throws UnknownHostException {
+        String localIp = InetAddress.getLocalHost().getHostAddress();
+        log.info("Central Server IP: " + localIp + ", port: " + PORT);
         new Thread(() -> {
-            try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-                log.info("Central Server started on port " + PORT);
+            try (ServerSocket serverSocket = new ServerSocket(PORT, 50, InetAddress.getByName("0.0.0.0"))) {
+                log.info("Central Server started on IP 0.0.0.0 and port " + PORT);
 
                 while (true) {
                     Socket clientSocket = serverSocket.accept();
-
-                    log.info("New taxi connected from: " + clientSocket.getInetAddress());
+                    log.info("New taxi connected from: " + clientSocket.getInetAddress()); // esto no se ve en el log
 
                     new Thread(() -> clientHandler.handleTaxiConnection(clientSocket)).start();
-
                     lastTaxi++;
                 }
             } catch (IOException e) {
@@ -46,8 +54,4 @@ public class ECCentralSocketServer {
             }
         }).start();
     }
-
-
-
-
 }

@@ -51,7 +51,6 @@ public class MessageHandler {
     }
 
 
-
     /**
      * Valida si la respuesta del servidor tiene un formato válido y si el LRC es correcto.
      *
@@ -112,6 +111,7 @@ public class MessageHandler {
         }
         return false;
     }
+
     public boolean isValidAuthentication(String message) {
         if (isValidMessage(message)) {
             String data = extractData(message);

@@ -2,7 +2,7 @@ package org.example.ec_central.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.example.ec_central.model.Location;
+import org.example.ec_central.model.entity.Location;
 import org.example.ec_central.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,13 +21,12 @@ import java.util.Objects;
 @Slf4j
 public class LocationService {
 
+    private final LocationRepository locationRepository;
     /**
      * Path to the locations file, injected from application properties.
      */
     @Value("${locations.file.path}")
     private String filePath;
-
-    private final LocationRepository locationRepository;
 
     /**
      * Constructor for LocationService.

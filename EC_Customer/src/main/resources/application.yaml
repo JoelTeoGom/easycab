@@ -6,5 +6,5 @@ spring:
     bootstrap-servers: ${broker.address}
 
     consumer:
-      group-id: client-group
+      group-id: group
       auto-offset-reset: earliest

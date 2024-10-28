@@ -15,30 +15,25 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 public class EcDeApplication implements CommandLineRunner {
 
-	@Autowired
-	private KafkaWaitForStart kafkaWaitForStart;
-	@Autowired
-	private SensorService sensor;
-	@Autowired
-	private KafkaService kafkaService;
-	@Autowired
-	private SocketService socketService;
+    @Autowired
+    private KafkaWaitForStart kafkaWaitForStart;
+    @Autowired
+    private SensorService sensor;
+    @Autowired
+    private KafkaService kafkaService;
+    @Autowired
+    private SocketService socketService;
 
-	private ShortestPathFinder shortestPathFinder = new ShortestPathFinder();
+    private ShortestPathFinder shortestPathFinder = new ShortestPathFinder();
 
-	public static void main(String[] args) {
-		SpringApplication.run(EcDeApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(EcDeApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		log.info("DE started with id {}", kafkaService.getTaxiId());
-		socketService.initialize();
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("DE started with id {}", kafkaService.getTaxiId());
+        socketService.initialize();
 
-		//String serviceStart = kafkaWaitForStart.consumeMessage();
-		//Thread.sleep(1000);
-		//System.out.println(serviceStart);
-		//String bestDirection = shortestPathFinder.getBestDirection(serviceStart.getEndX(), serviceStart.getEndY());
-		// kafkaService.publishDirection(bestDirection);
-	}
+    }
 }
