@@ -1,0 +1,16 @@
+org.example.ec_central
+org.example.ec_central.config
+org.example.ec_central.controller
+org.example.ec_central.model
+org.example.ec_central.model.entity
+org.example.ec_central.repository
+org.example.ec_central.service
+org.example.ec_central.utils
+org.example.ec_customer
+org.example.ec_customer.config
+org.example.ec_customer.service
+org.example.ec_de
+org.example.ec_de.config
+org.example.ec_de.model
+org.example.ec_de.services
+org.example.ec_s

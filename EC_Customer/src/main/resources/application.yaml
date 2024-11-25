@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: EC_Customer
+
+  kafka:
+    bootstrap-servers: ${broker.address}
+
+    consumer:
+      group-id: group
+      auto-offset-reset: earliest

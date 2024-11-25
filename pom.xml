@@ -1,0 +1,49 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>org.example</groupId>
+    <artifactId>easy-cab</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging> <!-- Esto indica que es el padre -->
+
+    <properties>
+        <java.version>21</java.version>
+        <!-- Definir versión de Lombok -->
+        <lombok.version>1.18.30</lombok.version>
+    </properties>
+
+    <modules>
+        <module>EC_Central</module>
+        <module>EC_DE</module>
+        <module>EC_Customer</module>
+        <module>EC_S</module>
+        <module>EC_CTC</module>
+        <!-- Aquí puedes agregar otros módulos que tengas -->
+    </modules>
+
+    <dependencies>
+        <!-- Lombok estará disponible para todos los submódulos -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Puedes agregar más dependencias comunes a todos los módulos -->
+    </dependencies>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
+
+</project>

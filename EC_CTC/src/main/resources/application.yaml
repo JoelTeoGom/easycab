@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: EC_CTC
+
+openweather:
+  api-key: fc7dfa9ead004c40d233219bf76f4122
+  endpoint: https://api.openweathermap.org/data/2.5/weather
+
