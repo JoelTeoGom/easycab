@@ -1,0 +1,71 @@
+version: '3.9'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    networks:
+      - easycab_network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.112.153.217:9092
+      KAFKA_ZOOKEEPER_CONNECT: 10.112.153.2:2181
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    networks:
+      - easycab_network
+
+  ec_customer_a:
+    build:
+      context: .
+      dockerfile: ./EC_Customer/Dockerfile
+    image: ec-customer:latest
+    environment:
+      SPRING_APPLICATION_NAME: EC_Customer_a
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: 10.112.153.217:9092
+      CLIENT_ID: "a"
+      broker.address: 10.112.153.217:9092
+      file: destinations1.txt
+    ports:
+      - "9001:8080"
+    depends_on:
+      - kafka
+    networks:
+      easycab_network:
+        ipv4_address: 10.112.153.201
+
+  ec_customer_b:
+    build:
+      context: .
+      dockerfile: ./EC_Customer/Dockerfile
+    image: ec-customer:latest
+    environment:
+      SPRING_APPLICATION_NAME: EC_Customer_b
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: 10.112.153.217:9092
+      CLIENT_ID: "b"
+      broker.address: 10.112.153.217:9092
+      file: destinations2.txt
+    ports:
+      - "9002:8080"
+    depends_on:
+      - kafka
+    networks:
+      easycab_network:
+        ipv4_address: 10.112.153.202
+
+networks:
+  easycab_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.112.153.0/24

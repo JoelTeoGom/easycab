@@ -8,7 +8,7 @@ COPY EC_Central /build/EC_Central
 COPY EC_DE /build/EC_DE
 COPY EC_Customer /build/EC_Customer
 COPY EC_S /build/EC_S
-
+COPY EC_CTC /build/EC_CTC
 # Instalar el proyecto padre para que esté disponible para los módulos
 RUN mvn -f /build/pom.xml clean install -DskipTests
 

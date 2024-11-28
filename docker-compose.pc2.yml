@@ -1,0 +1,65 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_DB: easycab
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      easycab_network:
+        ipv4_address: 10.112.153.30
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  ec_central:
+    build:
+      context: .
+      dockerfile: ./EC_Central/Dockerfile
+    image: ec-central:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://10.112.153.30:5432/easycab
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 10.112.153.217:9092
+      SERVER_PORT: 8081
+      BROKER_ADDRESS: 10.112.153.217:9092
+    ports:
+      - "8081:8081"
+      - "9090:9090"
+    networks:
+      - easycab_network
+    depends_on:
+      - postgres
+
+  ec_ctc:
+    build:
+      context: .
+      dockerfile: ./EC_CTC/Dockerfile
+    image: ec-ctc:latest
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://10.112.153.30:5432/easycab
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 10.112.153.217:9092
+      SERVER_PORT: 8082
+      BROKER_ADDRESS: 10.112.153.217:9092
+    ports:
+      - "8082:8082"
+    networks:
+      - easycab_network
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  easycab_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.112.153.0/24
