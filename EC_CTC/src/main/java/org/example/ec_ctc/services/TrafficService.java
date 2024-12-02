@@ -18,7 +18,7 @@ public class TrafficService {
 
     public String getTrafficStatus(String city) {
         String url = String.format("%s?q=%s&appid=%s&units=metric", endpoint, city, apiKey);
-
+        System.out.println("TRAFIC STATUS");
         try {
             WeatherResponse response = restTemplate.getForObject(url, WeatherResponse.class);
             if (response != null && response.getMain().getTemp() < 0) {
