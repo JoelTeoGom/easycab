@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+
+#  ec_registry:
+#    build:
+#      context: .
+#      dockerfile: ./EC_Registry/Dockerfile
+#    container_name: ec_registry
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_easycab:5432/easycab
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: postgres
+#    ports:
+#      - "8083:8083"  # Exponer el puerto 8083 del contenedor al puerto 8083 de la máquina
+#    networks:
+#      - easycab_network
+
+
+
+  ec_de_1:
+    build:
+      context: .
+      dockerfile: ./EC_DE/Dockerfile
+    image: ec-de:latest
+    environment:
+      SPRING_APPLICATION_NAME: EC_DE
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.1.3:9092
+      CENTRAL_IP: 192.168.1.4
+      CENTRAL_PORT: 8081
+      TAXI_ID: 1
+      SENSOR_PORT: 5001
+    ports:
+      - "8001:8080"
+    networks:
+      easycab_network:
+        ipv4_address: 192.168.1.101
+  ec_de_2:
+    build:
+      context: .
+      dockerfile: ./EC_DE/Dockerfile
+    image: ec-de:latest
+    environment:
+      SPRING_APPLICATION_NAME: EC_DE
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.1.3:9092
+      CENTRAL_IP: 192.168.1.4
+      CENTRAL_PORT: 8081
+      TAXI_ID: 2
+      SENSOR_PORT: 5002
+    ports:
+      - "8002:8080"
+    networks:
+      easycab_network:
+        ipv4_address: 192.168.1.102
+volumes:
+  postgres_data:
+
+networks:
+  easycab_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24

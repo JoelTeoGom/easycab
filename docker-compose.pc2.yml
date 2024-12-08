@@ -1,4 +1,11 @@
 services:
+
+#docker-compose -f docker-compose.pc2.yml down --volumes --remove-orphans
+
+#  docker-compose -f docker-compose.pc1.yml up --build -d
+#  docker-compose -f docker-compose.pc2.yml up --build -d
+#  docker-compose -f docker-compose.pc3.yml up --build -d
+
   postgres:
     image: postgres:14
     container_name: postgres_easycab
@@ -26,11 +33,14 @@ services:
       SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.1.3:9092
       SERVER_PORT: 8081
       BROKER_ADDRESS: 192.168.1.3:9092
+      CTC_URL: http://192.168.1.200:8082/traffic
     ports:
       - "8081:8081"
       - "9090:9090"
     networks:
-      - easycab_network
+      easycab_network:
+        ipv4_address: 192.168.1.4
+
     depends_on:
       - postgres
 
@@ -43,7 +53,20 @@ services:
     ports:
       - "8082:8082"
     networks:
+      easycab_network:
+        ipv4_address: 192.168.1.200 # IP fija para ec_ctc
+
+  nginx:
+    build:
+      context: ./taxi-tracker-nginx  # Ruta del directorio donde está el Dockerfile
+      dockerfile: Dockerfile  # Nombre de tu archivo Dockerfile (puedes omitirlo si se llama "Dockerfile")
+    container_name: taxi-tracker-nginx
+    ports:
+      - "8080:80"  # Mapea el puerto 80 del contenedor al puerto 8080 de la máquina
+    networks:
       - easycab_network
+    depends_on:
+      - ec_central
 
 networks:
   easycab_network:

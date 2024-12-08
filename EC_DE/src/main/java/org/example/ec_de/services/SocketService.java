@@ -15,6 +15,10 @@ import java.net.Socket;
 @Service
 @Slf4j
 public class SocketService {
+    /**
+     * Taxi token
+     */
+    private String authToken;
 
     /**
      * Start of Text character.
@@ -102,24 +106,41 @@ public class SocketService {
      * @return true if authentication is successful, false otherwise
      * @throws IOException if an I/O error occurs during authentication
      */
+    /**
+     * Authenticates the connection with the central server.
+     *
+     * @return true if authentication is successful, false otherwise
+     * @throws IOException if an I/O error occurs during authentication
+     */
     public boolean authenticate() throws IOException {
         connectToCentral();
-        // Format: AUTH#DigitalEngine#{token}#{taxiID}
+        // Formato del mensaje de autenticación: AUTH#DigitalEngine#{token}#{taxiID}
         String authMessage = buildMessage(String.format("AUTH#%s#token123", taxiId));
         outputStream.writeUTF(authMessage);
         log.info("Sent authentication message: {}", authMessage);
 
+        // Leer la respuesta del servidor
         String response = inputStream.readUTF();
+        log.info("Received response: {}", response);
+
         if (isValidMessage(response)) {
+            // Extraer los datos de la respuesta (sin STX, ETX y LRC)
             String data = extractData(response);
-            if ("ACK".equals(data)) {
-                log.info("Authentication successful.");
+            log.info("Extracted data: {}", data);
+
+            // Dividir los datos recibidos por el separador (FIELD_SEPARATOR: #)
+            String[] parts = data.split("#");
+
+            // Verificar si la respuesta es un ACK con token
+            if (parts.length == 2 && "ACK".equals(parts[0])) {
+                String token = parts[1];
+                log.info("Authentication successful. Token: {}", token);
                 return true;
             } else {
-                log.error("Authentication failed: {}", data);
+                log.error("Authentication failed or invalid response format: {}", data);
             }
         } else {
-            log.error("Invalid response during authentication.");
+            log.error("Invalid message received during authentication.");
         }
         return false;
     }
@@ -161,9 +182,13 @@ public class SocketService {
                 log.info("Connection closed.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error while closing the connection: {}", e.getMessage());
+        } finally {
+            authToken = null; // Limpiar el token al cerrar la conexión
+            log.info("Authentication token cleared.");
         }
     }
+
 
     /**
      * Builds a message with the given data, including STX, ETX, and LRC.
@@ -214,5 +239,14 @@ public class SocketService {
      */
     private String extractData(String message) {
         return message.substring(1, message.indexOf(ETX));
+    }
+
+    /**
+     * Returns the authentication token.
+     *
+     * @return the authentication token
+     */
+    public String getAuthToken() {
+        return authToken;
     }
 }

@@ -25,7 +25,8 @@
         <module>EC_DE</module>
         <module>EC_Customer</module>
         <module>EC_S</module>
-        <module>EC_CTC</module>
+<!--        <module>EC_CTC</module>-->
+<!--        <module>EC_Registry</module>-->
         <!-- Aquí puedes agregar otros módulos que tengas -->
     </modules>
 

@@ -19,6 +19,8 @@ public class ECCentralSocketServer {
 
     private static final int PORT = 9090;
     private final ClientHandler clientHandler;
+
+
     private int lastTaxi = 0;
 
     /**

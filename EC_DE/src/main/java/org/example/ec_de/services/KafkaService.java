@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.example.ec_central.utils.MappingUtils;
+import org.example.ec_de.utils.MappingUtils;
 import org.example.ec_de.model.CustomerStatusDto;
 import org.example.ec_de.model.ShortestPathFinder;
 import org.example.ec_de.model.TaxiState;

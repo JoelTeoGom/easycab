@@ -14,6 +14,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Service class for handling client (taxi) connections and interactions.
@@ -28,6 +31,9 @@ public class ClientHandler {
     private final MessageHandler messageHandler;
     private final ConcurrentHashMap<String, Socket> connectedTaxis = new ConcurrentHashMap<>();
     private final KafkaAdmin kafkaAdmin;
+
+    //mapa para registrar los tokens
+    private Map<String, String> tokenRegistry = new HashMap<>();
 
     /**
      * Constructs a new ClientHandler with the specified dependencies.
@@ -54,22 +60,34 @@ public class ClientHandler {
             log.info("Received authentication message: {}", authMessage);
 
             if (messageHandler.isValidAuthentication(authMessage)) {
-                outputStream.writeUTF(messageHandler.buildAck(true)); // Respond with ACK if authentication is successful
-                log.info("Taxi authenticated successfully.");
+
+
+//                outputStream.writeUTF(messageHandler.buildAck(true)); // Respond with ACK if authentication is successful
+//                log.info("Taxi authenticated successfully.");
+
+                // Responder con el token
+                String token = UUID.randomUUID().toString();
+                String ackMessage = messageHandler.buildAckWithToken(token);
+                outputStream.writeUTF(ackMessage);
+                log.info("Taxi authenticated successfully. Token: {}", token);
+
 
                 String id = authMessage.split("#")[1];
                 log.info("Updating connected taxis, current connected taxis: {}", connectedTaxis.values().stream().map(Socket::getInetAddress).toList());
+
                 connectedTaxis.put(id, taxiSocket);
+                tokenRegistry.put(id, token); // tokenRegistry es un mapa id -> token
+
                 log.info("Connected taxis updated, current connected taxis: {}", connectedTaxis.values().stream().map(Socket::getInetAddress).toList());
                 String topicName = "taxi-start-service-" + id;
                 NewTopic newTopic = new NewTopic(topicName, 1, (short) 1);
                 kafkaAdmin.createOrModifyTopics(newTopic);
-
                 log.info("Created topic for client: {}", topicName);
 
                 handleTaxiRequests(inputStream, outputStream, id);
 
                 connectedTaxis.remove(id);
+                tokenRegistry.remove(id);
             } else {
                 outputStream.writeUTF(messageHandler.buildAck(false)); // Respond with NACK if authentication fails
                 log.error("Taxi authentication failed.");
@@ -111,4 +129,9 @@ public class ClientHandler {
             }
         }
     }
+
+
+
+
+
 }

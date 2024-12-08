@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/utils/MappingUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EC_Registry/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/taxi-tracker-nginx/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ECCentralSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ECCentralSocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/MessageHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/TrafficService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/TrafficService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.pc2.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.pc2.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2piSV7RAUrWIRLvRz5ENSp03NcK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.pc1.yml.kafka: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.pc1.yml.zookeeper: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.pc1.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.pc2.yml.ec_central: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.pc2.yml.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.pc3.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.EC_CENTRAL [clean,compile,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.EC_CENTRAL [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.EC_CTC [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.EC_Registry [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.easy-cab [-f,/build/EC_DE/pom.xml,clean...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.easy-cab [clean,install,-U].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.easy-cab [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.easy-cab [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.easy-cab [rm,-rf...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ec-customer [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ec-de [clean,compile,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ec-de [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EcDeApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/joelt/OneDrive/Escritorio/easy-cab-prac-master/EC_DE/src/main/java/org/example/ec_de&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\joelt\OneDrive\Escritorio\easy-cab-prac-master\EC_DE\src\main\java\org\example\ec_de" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn -f /build/EC_DE/pom.xml clean install -DskipTests " />
+      <command value="mvn rm -rf ~/.m2/repository/org/example mvn clean install compile" />
+      <command value="mvn clean install -U " />
+      <command value="mvn deploy" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Docker.docker-compose.pc3.yml: Compose Deployment">
+    <configuration name="ECCustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ec-customer" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ec_customer.ECCustomerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EC_S" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ec-s" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ec_s.EC_S" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EcCentralApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="EC_CENTRAL" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ec_central.EcCentralApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EcDeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <envs>
+        <env name="SPRING_APPLICATION_NAME" value="EC_DE,SPRING_KAFKA_BOOTSTRAP-SERVERS=192.168.1.3:9092,CENTRAL_IP=192.168.1.5,CENTRAL_PORT=8081,TAXI_ID=1,SENSOR_PORT=5001 " />
+      </envs>
+      <module name="ec-de" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ec_de.EcDeApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.pc1.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.pc1.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.pc2.yml.ec_central: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="envFilePath" value="" />
+          <option name="services">
+            <list>
+              <option value="ec_central" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.pc2.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.pc2.yml.ec_ctc: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="ec_ctc" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.pc2.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.pc3.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.pc3.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.pc3.yml.ec_de_1: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="ec_de_1" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.pc3.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment" />
+      <item itemvalue="Spring Boot.ECCustomerApplication" />
+      <item itemvalue="Spring Boot.EC_S" />
+      <item itemvalue="Spring Boot.EcCentralApplication" />
+      <item itemvalue="Spring Boot.EcDeApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="" />
+      <created>1733247432017</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733247432017</updated>
+      <workItem from="1733247457830" duration="6290000" />
+      <workItem from="1733592860648" duration="19000" />
+      <workItem from="1733592937716" duration="206000" />
+      <workItem from="1733594017148" duration="5547000" />
+      <workItem from="1733651926256" duration="9330000" />
+      <workItem from="1733669987671" duration="153000" />
+      <workItem from="1733670169414" duration="132000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

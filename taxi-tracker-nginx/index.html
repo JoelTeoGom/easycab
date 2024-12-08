@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Taxi Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Estilos CSS -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    #content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    #map-container {
+      flex: 1;
+      padding: 10px;
+      overflow: auto;
+    }
+
+    #sidebar {
+      width: 300px;
+      max-width: 100%;
+      background-color: #fff;
+      border-left: 1px solid #ddd;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    #sidebar h2 {
+      font-size: 1.2em;
+      margin-top: 0;
+    }
+
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #sidebar li {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    td {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      border: 1px solid #ddd;
+      position: relative;
+    }
+
+    .taxi-moving {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .taxi-stopped {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .destination {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .customer {
+      background-color: #ffc107;
+      color: #212529;
+    }
+
+    .empty {
+      background-color: #fff;
+    }
+
+    /* Estilos para múltiples elementos en la misma posición */
+    .cell-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .cell-content span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      line-height: 20px;
+    }
+
+    .multiple-items::after {
+      content: attr(data-count);
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-size: 12px;
+      width: 18px;
+      height: 18px;
+      text-align: center;
+      border-radius: 50%;
+      line-height: 18px;
+    }
+
+    /* Efectos de hover */
+    td:hover {
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+
+    /* Responsividad */
+    @media (max-width: 800px) {
+      #sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #ddd;
+      }
+
+      #content {
+        flex-direction: column;
+      }
+
+      td {
+        width: 15px;
+        height: 15px;
+        line-height: 15px;
+      }
+    }
+  </style>
+
+  <!-- Librerías JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h1>Taxi Tracker - Mapa 30x30</h1>
+<div id="content">
+  <div id="map-container">
+    <table id="cityMap">
+      <!-- La tabla se generará y actualizará dinámicamente -->
+    </table>
+  </div>
+  <div id="sidebar">
+    <h2>Información</h2>
+    <div id="info-content">
+      <!-- La información se cargará dinámicamente -->
+    </div>
+  </div>
+</div>
+
+<script>
+  const cityMap = document.getElementById('cityMap');
+  const infoContent = document.getElementById('info-content');
+
+  function updateMap(cityMapData) {
+    const map = cityMapData.map;
+
+    // Almacenar información para la barra lateral
+    const taxis = [];
+    const customers = [];
+    const destinations = [];
+
+    for (let i = 0; i < map.length; i++) {
+      for (let j = 0; j < map[i].length; j++) {
+        const cellData = map[i][j];
+        const cell = cityMap.rows[i].cells[j];
+        cell.className = '';
+        cell.innerHTML = '';
+
+        let type = '';
+        switch (cellData.color) {
+          case 'RED':
+            type = 'taxi-stopped';
+            taxis.push({
+              id: cellData.data,
+              status: 'Parado',
+              position: `(${j}, ${i})`
+            });
+            break;
+          case 'GREEN':
+            type = 'taxi-moving';
+            taxis.push({
+              id: cellData.data,
+              status: 'En movimiento',
+              position: `(${j}, ${i})`
+            });
+            break;
+          case 'YELLOW':
+            type = 'customer';
+            customers.push({
+              id: cellData.data,
+              position: `(${j}, ${i})`
+            });
+            break;
+          case 'BLUE':
+            type = 'destination';
+            destinations.push({
+              id: cellData.data,
+              position: `(${j}, ${i})`
+            });
+            break;
+          case 'WHITE':
+          default:
+            type = 'empty';
+            break;
+        }
+
+        cell.classList.add(type);
+
+        if (cellData.data) {
+          let content = document.createElement('div');
+          content.classList.add('cell-content');
+
+          // Mostrar el contenido solo si no es un punto
+          if (cellData.data !== '.') {
+            // Si hay múltiples elementos en la misma posición
+            if (Array.isArray(cellData.data)) {
+              cell.classList.add('multiple-items');
+              cell.setAttribute('data-count', cellData.data.length);
+              content.innerHTML = `<span>${cellData.data[0]}</span>`;
+            } else {
+              content.innerHTML = `<span>${cellData.data}</span>`;
+            }
+            cell.appendChild(content);
+          }
+        }
+      }
+    }
+
+    // Actualizar la barra lateral con la información recopilada
+    updateSidebar(taxis, customers, destinations);
+  }
+
+  function generateMap(cityMapData) {
+    const map = cityMapData.map;
+    cityMap.innerHTML = ''; // Limpiar tabla existente
+
+    for (let i = 0; i < map.length; i++) {
+      let row = cityMap.insertRow();
+      for (let j = 0; j < map[i].length; j++) {
+        let cell = row.insertCell();
+        cell.classList.add('empty');
+      }
+    }
+
+    updateMap(cityMapData);
+  }
+
+  function updateSidebar(taxis, customers, destinations) {
+    infoContent.innerHTML = '';
+
+    // Información de taxis
+    const taxiSection = document.createElement('div');
+    const taxiTitle = document.createElement('h3');
+    taxiTitle.textContent = `Taxis (${taxis.length})`;
+    taxiSection.appendChild(taxiTitle);
+
+    const taxiList = document.createElement('ul');
+    taxis.forEach(taxi => {
+      const item = document.createElement('li');
+      item.textContent = `ID: ${taxi.id}, Estado: ${taxi.status}, Posición: ${taxi.position}`;
+      taxiList.appendChild(item);
+    });
+    taxiSection.appendChild(taxiList);
+    infoContent.appendChild(taxiSection);
+
+    // Información de clientes
+    const customerSection = document.createElement('div');
+    const customerTitle = document.createElement('h3');
+    customerTitle.textContent = `Clientes (${customers.length})`;
+    customerSection.appendChild(customerTitle);
+
+    const customerList = document.createElement('ul');
+    customers.forEach(customer => {
+      const item = document.createElement('li');
+      item.textContent = `ID: ${customer.id}, Posición: ${customer.position}`;
+      customerList.appendChild(item);
+    });
+    customerSection.appendChild(customerList);
+    infoContent.appendChild(customerSection);
+
+    // Información de destinos
+    const destinationSection = document.createElement('div');
+    const destinationTitle = document.createElement('h3');
+    destinationTitle.textContent = `Destinos (${destinations.length})`;
+    destinationSection.appendChild(destinationTitle);
+
+    const destinationList = document.createElement('ul');
+    destinations.forEach(dest => {
+      const item = document.createElement('li');
+      item.textContent = `ID: ${dest.id}, Posición: ${dest.position}`;
+      destinationList.appendChild(item);
+    });
+    destinationSection.appendChild(destinationList);
+    infoContent.appendChild(destinationSection);
+  }
+
+  let stompClient = null;
+
+  function connect() {
+    const socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+      console.log('Conectado: ' + frame);
+
+      // Suscripción para recibir el mapa completo
+      stompClient.subscribe('/topic/taxi-coordinates', function (message) {
+        const cityMapData = JSON.parse(message.body);
+        generateMap(cityMapData);
+      });
+    });
+  }
+
+  window.onload = function () {
+    connect();
+  };
+</script>
+</body>
+</html>

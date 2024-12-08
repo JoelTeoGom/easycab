@@ -141,4 +141,24 @@ public class MessageHandler {
         }
         return null;
     }
+
+    /**
+     * Construye un mensaje de "ACK" con un token.
+     *
+     * @param token El token que se debe incluir en el mensaje ACK.
+     * @return El mensaje formateado con STX, ETX y LRC.
+     */
+    public String buildAckWithToken(String token) {
+        // Construir los datos del mensaje con "ACK" y el token, separados por FIELD_SEPARATOR
+        String data = ACK + FIELD_SEPARATOR + token;
+
+        // Calcular el LRC del mensaje
+        char lrc = calculateLRC(data);
+
+        // Formatear el mensaje completo con STX, DATA, ETX y LRC
+        return STX + data + ETX + lrc;
+    }
+
+
+
 }

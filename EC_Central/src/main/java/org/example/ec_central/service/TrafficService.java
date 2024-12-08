@@ -1,6 +1,7 @@
 package org.example.ec_central.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,8 +13,8 @@ public class TrafficService {
 
     private String selectedCity = "London"; // Ciudad inicial predeterminada
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String trafficApiUrl = "http://192.168.1.4:8082/traffic";
-
+    @Value("${CTC_URL}") // Obtiene la URL desde la variable de entorno
+    private String trafficApiUrl;
 
     public void startMonitoring() {
         Thread monitoringThread = new Thread(() -> {
