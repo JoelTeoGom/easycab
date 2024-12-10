@@ -276,6 +276,9 @@ public class KafkaService {
                     taxi.setAvailable(true);
                     taxi.setState(TaxiState.IDLE);
                     taxi.setDestIdentifier(null);
+                    log.info(clientHandler.getTokenRegistry().toString());
+                    clientHandler.getTokenRegistry().remove(taxi.getIdentifier());
+                    log.info(clientHandler.getTokenRegistry().toString());
                 }
                  taxiRepository.save(taxi);
 

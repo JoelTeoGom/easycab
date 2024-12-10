@@ -9,15 +9,15 @@ services:
       - "2181:2181"
     networks:
       easycab_network:
-        ipv4_address: 192.168.1.2
+        ipv4_address: 192.168.100.2
 
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.3:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.100.3:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_ZOOKEEPER_CONNECT: 192.168.1.2:2181
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.100.2:2181
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -28,7 +28,7 @@ services:
       - zookeeper
     networks:
       easycab_network:
-        ipv4_address: 192.168.1.3
+        ipv4_address: 192.168.100.3
 
   ec_customer_a:
     build:
@@ -38,9 +38,9 @@ services:
     container_name: ec_customer_a
     environment:
       SPRING_APPLICATION_NAME: EC_Customer_a
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.1.3:9092
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.100.3:9092
       CLIENT_ID: "a"
-      broker.address: 192.168.1.3:9092
+      broker.address: 192.168.100.3:9092
       file: destinations1.txt
     ports:
       - "9001:8080"
@@ -48,7 +48,7 @@ services:
       - kafka
     networks:
       easycab_network:
-        ipv4_address: 192.168.1.111
+        ipv4_address: 192.168.100.111
 
 #  ec_customer_b:
 #    build:
@@ -69,10 +69,11 @@ services:
 #    networks:
 #      easycab_network:
 #        ipv4_address: 192.168.1.5
-
 networks:
   easycab_network:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.1.0/24
+        - subnet: 192.168.100.0/24
+
+

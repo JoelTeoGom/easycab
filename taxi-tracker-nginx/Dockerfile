@@ -1,10 +1,13 @@
-# Usar la imagen base de Nginx
+# Usa la imagen oficial de Nginx
 FROM nginx:alpine
 
-# Copiar el archivo index.html al directorio de Nginx
-COPY index.html /usr/share/nginx/html/index.html
+# Copia la configuración de Nginx personalizada
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Exponer el puerto 80
+# Copia los archivos estáticos de la página web
+COPY index.html /usr/share/nginx/html/
+
+# Exponer el puerto 80 para servir la página web
 EXPOSE 80
 
 # Iniciar Nginx

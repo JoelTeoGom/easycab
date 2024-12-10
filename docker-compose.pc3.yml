@@ -24,8 +24,8 @@ services:
     image: ec-de:latest
     environment:
       SPRING_APPLICATION_NAME: EC_DE
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.1.3:9092
-      CENTRAL_IP: 192.168.1.4
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
+      CENTRAL_IP: 192.168.100.4
       CENTRAL_PORT: 8081
       TAXI_ID: 1
       SENSOR_PORT: 5001
@@ -33,7 +33,8 @@ services:
       - "8001:8080"
     networks:
       easycab_network:
-        ipv4_address: 192.168.1.101
+        ipv4_address: 192.168.100.101
+
   ec_de_2:
     build:
       context: .
@@ -41,8 +42,8 @@ services:
     image: ec-de:latest
     environment:
       SPRING_APPLICATION_NAME: EC_DE
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.1.3:9092
-      CENTRAL_IP: 192.168.1.4
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
+      CENTRAL_IP: 192.168.100.4
       CENTRAL_PORT: 8081
       TAXI_ID: 2
       SENSOR_PORT: 5002
@@ -50,13 +51,14 @@ services:
       - "8002:8080"
     networks:
       easycab_network:
-        ipv4_address: 192.168.1.102
-volumes:
-  postgres_data:
+        ipv4_address: 192.168.100.102
 
 networks:
   easycab_network:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.1.0/24
+        - subnet: 192.168.100.0/24
+
+volumes:
+  postgres_data:

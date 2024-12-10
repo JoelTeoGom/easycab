@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.example.ec_central.repository.TaxiRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class ClientHandler {
     private final MessageHandler messageHandler;
     private final ConcurrentHashMap<String, Socket> connectedTaxis = new ConcurrentHashMap<>();
     private final KafkaAdmin kafkaAdmin;
-
+    private final TaxiRepository taxiRepository;
     //mapa para registrar los tokens
     private Map<String, String> tokenRegistry = new HashMap<>();
 
@@ -42,10 +43,11 @@ public class ClientHandler {
      * @param messageHandler the handler for processing messages
      * @param kafkaAdmin the Kafka admin for managing topics
      */
-    public ClientHandler(TaxiService taxiService, MessageHandler messageHandler, @Qualifier("kafkaAdmin") KafkaAdmin kafkaAdmin) {
+    public ClientHandler(TaxiService taxiService, MessageHandler messageHandler, @Qualifier("kafkaAdmin") KafkaAdmin kafkaAdmin, TaxiRepository taxiRepository) {
         this.taxiService = taxiService;
         this.messageHandler = messageHandler;
         this.kafkaAdmin = kafkaAdmin;
+        this.taxiRepository = taxiRepository;
     }
 
     /**
@@ -60,6 +62,13 @@ public class ClientHandler {
             log.info("Received authentication message: {}", authMessage);
 
             if (messageHandler.isValidAuthentication(authMessage)) {
+                String id = authMessage.split("#")[1];
+                // Verificar si el taxi está registrado en la base de datos a través del módulo EC_Registry
+                if (!isTaxiRegistered(id)) {
+                    outputStream.writeUTF(messageHandler.buildAck(false)); // Responder con NACK si no está registrado
+                    log.error("Taxi {} is not registered. Connection rejected.", id);
+                    return; // Finalizar el manejo de la conexión
+                }
 
 
 //                outputStream.writeUTF(messageHandler.buildAck(true)); // Respond with ACK if authentication is successful
@@ -72,8 +81,8 @@ public class ClientHandler {
                 log.info("Taxi authenticated successfully. Token: {}", token);
 
 
-                String id = authMessage.split("#")[1];
                 log.info("Updating connected taxis, current connected taxis: {}", connectedTaxis.values().stream().map(Socket::getInetAddress).toList());
+
 
                 connectedTaxis.put(id, taxiSocket);
                 tokenRegistry.put(id, token); // tokenRegistry es un mapa id -> token
@@ -97,6 +106,23 @@ public class ClientHandler {
             log.error("Error handling taxi connection: {}", e.getMessage());
         }
     }
+
+
+    /**
+     * Verifica si el taxi está registrado en la base de datos a través de EC_Registry.
+     *
+     * @param taxiId el ID del taxi a verificar
+     * @return true si el taxi está registrado, false en caso contrario
+     */
+    private boolean isTaxiRegistered(String taxiId) {
+        try {
+            return taxiRepository.findByIdentifier(taxiId).isPresent();
+        } catch (Exception e) {
+            log.error("Error checking taxi registration status: {}", e.getMessage());
+            return false;
+        }
+    }
+
 
     /**
      * Handles requests from authenticated taxis.

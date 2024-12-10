@@ -1,22 +1,22 @@
 package org.example.ec_central.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-/**
- * Configuration class for setting up WebSocket message broker.
- */
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     /**
-     * Configures the message broker.
+     * Configura el broker de mensajes.
      *
-     * @param config the MessageBrokerRegistry to configure
+     * @param config el MessageBrokerRegistry para configurar
      */
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -25,14 +25,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
 
     /**
-     * Registers STOMP endpoints.
+     * Registra los endpoints STOMP.
      *
-     * @param registry the StompEndpointRegistry to configure
+     * @param registry el StompEndpointRegistry para configurar
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns("http://*", "https://*")
-                .withSockJS();
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("http://*", "https://*").withSockJS();
     }
+
 }
