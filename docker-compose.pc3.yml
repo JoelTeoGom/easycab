@@ -1,27 +1,35 @@
 version: '3.9'
+
 services:
+  ec_registry:
+    build:
+      context: .
+      dockerfile: EC_Registry/Dockerfile
+    container_name: ec_registry
 
-#  ec_registry:
-#    build:
-#      context: .
-#      dockerfile: ./EC_Registry/Dockerfile
-#    container_name: ec_registry
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_easycab:5432/easycab
-#      SPRING_DATASOURCE_USERNAME: postgres
-#      SPRING_DATASOURCE_PASSWORD: postgres
-#    ports:
-#      - "8083:8083"  # Exponer el puerto 8083 del contenedor al puerto 8083 de la máquina
-#    networks:
-#      - easycab_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.100.100:5432/easycab
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
 
-
+    volumes:
+      - server:/server
+      - shared:/shared
+    ports:
+      - "8443:8443"
+    networks:
+      easycab_network:
+        ipv4_address: 192.168.100.5
 
   ec_de_1:
     build:
       context: .
-      dockerfile: ./EC_DE/Dockerfile
-    image: ec-de:latest
+      dockerfile: EC_DE/Dockerfile
+    container_name: ec_de_1
+    volumes:
+      - client:/client
+      - shared:/shared
     environment:
       SPRING_APPLICATION_NAME: EC_DE
       SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
@@ -29,8 +37,13 @@ services:
       CENTRAL_PORT: 8081
       TAXI_ID: 1
       SENSOR_PORT: 5001
+      REGISTRY_URL: https://192.168.100.5:8443/taxis
+    depends_on:
+      - ec_registry
     ports:
       - "8001:8080"
+    stdin_open: true
+    tty: true
     networks:
       easycab_network:
         ipv4_address: 192.168.100.101
@@ -38,8 +51,11 @@ services:
   ec_de_2:
     build:
       context: .
-      dockerfile: ./EC_DE/Dockerfile
-    image: ec-de:latest
+      dockerfile: EC_DE/Dockerfile
+    container_name: ec_de_2
+    volumes:
+      - client:/client
+      - shared:/shared
     environment:
       SPRING_APPLICATION_NAME: EC_DE
       SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
@@ -47,8 +63,13 @@ services:
       CENTRAL_PORT: 8081
       TAXI_ID: 2
       SENSOR_PORT: 5002
+      REGISTRY_URL: https://192.168.100.5:8443/taxis
     ports:
       - "8002:8080"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - ec_registry
     networks:
       easycab_network:
         ipv4_address: 192.168.100.102
@@ -61,4 +82,6 @@ networks:
         - subnet: 192.168.100.0/24
 
 volumes:
-  postgres_data:
+  server:
+  shared:
+  client:

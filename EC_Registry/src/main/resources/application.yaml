@@ -1,0 +1,22 @@
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: /server/keystore.p12
+    key-store-password: your_password
+    key-store-type: PKCS12
+    key-alias: myalias
+
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.100.100:5432/easycab
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        default_enum_type:
+          STRING

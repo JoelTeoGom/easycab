@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Created-By: Maven JAR Plugin 3.3.0
+Build-Jdk-Spec: 21
+Class-Path: spring-boot-starter-3.3.4.jar spring-boot-3.3.4.jar spring-b
+ oot-autoconfigure-3.3.4.jar spring-boot-starter-logging-3.3.4.jar logba
+ ck-classic-1.5.8.jar logback-core-1.5.8.jar log4j-to-slf4j-2.23.1.jar l
+ og4j-api-2.23.1.jar jul-to-slf4j-2.0.16.jar jakarta.annotation-api-2.1.
+ 1.jar spring-core-6.1.13.jar spring-jcl-6.1.13.jar snakeyaml-2.2.jar sp
+ ring-boot-starter-web-3.3.4.jar spring-boot-starter-json-3.3.4.jar jack
+ son-databind-2.17.2.jar jackson-core-2.17.2.jar jackson-datatype-jdk8-2
+ .17.2.jar jackson-datatype-jsr310-2.17.2.jar jackson-module-parameter-n
+ ames-2.17.2.jar spring-boot-starter-tomcat-3.3.4.jar tomcat-embed-core-
+ 10.1.30.jar tomcat-embed-el-10.1.30.jar tomcat-embed-websocket-10.1.30.
+ jar spring-webmvc-6.1.13.jar spring-expression-6.1.13.jar postgresql-42
+ .6.0.jar checker-qual-3.31.0.jar jackson-annotations-2.17.2.jar spring-
+ web-6.1.13.jar spring-beans-6.1.13.jar micrometer-observation-1.13.4.ja
+ r micrometer-commons-1.13.4.jar jakarta.persistence-api-3.1.0.jar sprin
+ g-data-jpa-3.3.4.jar spring-data-commons-3.3.4.jar spring-orm-6.1.13.ja
+ r spring-jdbc-6.1.13.jar spring-context-6.1.13.jar spring-aop-6.1.13.ja
+ r spring-tx-6.1.13.jar antlr4-runtime-4.13.0.jar slf4j-api-2.0.16.jar
+Implementation-Title: EC_Registry
+Implementation-Version: 0.0.1-SNAPSHOT
+Main-Class: org.springframework.boot.loader.launch.JarLauncher
+Start-Class: org.example.ec_registry.EcRegistryApplication
+Spring-Boot-Version: 3.3.4
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+Spring-Boot-Classpath-Index: BOOT-INF/classpath.idx
+Spring-Boot-Layers-Index: BOOT-INF/layers.idx
+

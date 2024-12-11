@@ -7,6 +7,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  client:
+    registry:
+      url: https://192.168.100.5:8443
+
+  ssl:
+    key-store: /app/client-keystore.p12
+    key-store-password: password
+    key-store-type: PKCS12
+    trust-store: /app/server-cert.crt
 
   kafka:
     consumer:
@@ -25,3 +34,8 @@ locations:
     path: initial_map.txt
 
 central.ip: localhost
+
+logging:
+  level:
+    root: info
+    org.springframework: warn
