@@ -10,10 +10,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Service;
 
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.KeyFactory;
+import java.security.PublicKey;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +38,7 @@ public class ClientHandler {
     private final ConcurrentHashMap<String, Socket> connectedTaxis = new ConcurrentHashMap<>();
     private final KafkaAdmin kafkaAdmin;
     private final TaxiRepository taxiRepository;
+    private final EncryptionService encryptionService;
     //mapa para registrar los tokens
     private Map<String, String> tokenRegistry = new HashMap<>();
 
@@ -43,11 +49,12 @@ public class ClientHandler {
      * @param messageHandler the handler for processing messages
      * @param kafkaAdmin the Kafka admin for managing topics
      */
-    public ClientHandler(TaxiService taxiService, MessageHandler messageHandler, @Qualifier("kafkaAdmin") KafkaAdmin kafkaAdmin, TaxiRepository taxiRepository) {
+    public ClientHandler(TaxiService taxiService, MessageHandler messageHandler, @Qualifier("kafkaAdmin") KafkaAdmin kafkaAdmin, TaxiRepository taxiRepository, EncryptionService encryptionService) {
         this.taxiService = taxiService;
         this.messageHandler = messageHandler;
         this.kafkaAdmin = kafkaAdmin;
         this.taxiRepository = taxiRepository;
+        this.encryptionService = encryptionService;
     }
 
     /**
@@ -70,9 +77,9 @@ public class ClientHandler {
                     return; // Finalizar el manejo de la conexión
                 }
 
+                // Intercambiar claves públicas
+                exchangePublicKeys(inputStream, outputStream, id);
 
-//                outputStream.writeUTF(messageHandler.buildAck(true)); // Respond with ACK if authentication is successful
-//                log.info("Taxi authenticated successfully.");
 
                 // Responder con el token
                 String token = UUID.randomUUID().toString();
@@ -106,6 +113,31 @@ public class ClientHandler {
             log.error("Error handling taxi connection: {}", e.getMessage());
         }
     }
+
+
+
+    private void exchangePublicKeys(DataInputStream inputStream, DataOutputStream outputStream, String taxiId) throws IOException {
+        try {
+            // Recibir la clave pública del taxi
+            String taxiPublicKeyBase64 = inputStream.readUTF();
+            byte[] taxiPublicKeyBytes = Base64.getDecoder().decode(taxiPublicKeyBase64);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            PublicKey taxiPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(taxiPublicKeyBytes));
+            encryptionService.registerTaxiPublicKey(taxiId, taxiPublicKey);
+            log.info("Received and registered public key for taxi: {}", taxiId);
+
+            // Enviar la clave pública de Central al taxi
+            String centralPublicKeyBase64 = Base64.getEncoder().encodeToString(encryptionService.getCentralPublicKey().getEncoded());
+            outputStream.writeUTF(centralPublicKeyBase64);
+            log.info("Sent public key to taxi: {}", taxiId);
+
+        } catch (Exception e) {
+            log.error("Error exchanging public keys with taxi {}: {}", taxiId, e.getMessage());
+            throw new IOException("Public key exchange failed", e);
+        }
+    }
+
+
 
 
     /**

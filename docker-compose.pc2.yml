@@ -40,7 +40,6 @@ services:
     networks:
       easycab_network:
         ipv4_address: 192.168.100.4
-
     depends_on:
       - postgres
 

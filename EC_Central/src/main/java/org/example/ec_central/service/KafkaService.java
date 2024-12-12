@@ -44,7 +44,7 @@ public class KafkaService {
     private final CustomerService customerService;
     private final CustomerTaxiAssignmentRepository customerTaxiAssignmentRepository;
     private final CustomerTaxiAssignmentService customerTaxiAssignmentService;
-
+    private final EncryptionService encryptionService;
     private CityMap cityMap;
 
     /**
@@ -67,43 +67,7 @@ public class KafkaService {
         }
     }
 
-    /**
-     * Publishes an event indicating that a taxi has been assigned.
-     *
-     * @param taxi the taxi that has been assigned
-     */
-    public void publishTaxiAssignedEvent(Taxi taxi) {
-        String message = "Taxi " + taxi.getIdentifier() + " assigned to position " + taxi.getPosition();
-        kafkaTemplate.send("taxi-status", message);
-        this.logKafkaSend("Published Kafka event: " + message, "taxi-status");
-    }
 
-    /**
-     * Listens for taxi status updates from Kafka.
-     *
-     * @param message the message received from Kafka
-     */
-    @KafkaListener(topics = "taxi-status", groupId = "group")
-    public void listenTaxiStatusUpdates(String message) {
-        log.info("Received Kafka message: {}", message);
-
-        if (message.contains("has arrived at destination")) {
-            String taxiIdentifier = extractTaxiIdentifier(message);
-            taxiService.findTaxiByIdentifier(taxiIdentifier)
-                    .ifPresent(taxiService::releaseTaxi);
-            log.info("Taxi {} has been released.", taxiIdentifier);
-        }
-    }
-
-    /**
-     * Extracts the taxi identifier from a message.
-     *
-     * @param message the message containing the taxi identifier
-     * @return the extracted taxi identifier
-     */
-    private String extractTaxiIdentifier(String message) {
-        return message.split(" ")[1];
-    }
 
     /**
      * Listens for service requests from Kafka.
@@ -168,6 +132,9 @@ public class KafkaService {
         kafkaTemplate.send(topicName, message);
     }
 
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Publishes a message to a taxi's Kafka topic.
      *
@@ -198,7 +165,7 @@ public class KafkaService {
             log.info("Taxi disponible en DATABASE: {}, connectedTaxis con sockets(SIN COMPROBAR CONEXION): {}", taxi.getIdentifier(), clientHandler.getConnectedTaxis());
             if (clientHandler.getConnectedTaxis().containsKey(taxi.getIdentifier())) {
                 log.info("Taxi key: {}", taxi.getIdentifier());
-                if (isTaxiConnected(clientHandler.getConnectedTaxis().get(taxi.getIdentifier()))) {
+                if (isTaxiConnected(clientHandler.getConnectedTaxis().get(taxi.getIdentifier()), taxi.getIdentifier())) {
                     log.info("Taxi conectado: {}", taxi.getIdentifier());
                     Optional<Location> location = locationRepository.findByIdentifier(destination);
                     if (location.isEmpty()) {
@@ -246,14 +213,16 @@ public class KafkaService {
      * @return true if a taxi socket was successfully up, false otherwise
      */
 
-    public boolean isTaxiConnected(Socket socket){
+    public boolean isTaxiConnected(Socket socket, String identifier){
 
         if (socket != null && socket.isConnected() && !socket.isClosed()) {
             log.info("socket SI disponible {}", socket);
             return true;
+        } else if (socket != null && socket.isClosed()) {
+            clientHandler.getConnectedTaxis().remove(identifier);
         }
-
         log.info("socket NO disponible {}", socket);
+
         return false;
     }
 
@@ -340,16 +309,8 @@ public class KafkaService {
                 taxiStatusDto.getTaxiId(), taxiStatusDto.getX(), taxiStatusDto.getY());
     }
 
-    /**
-     * Logs a message indicating that a Kafka message was sent.
-     *
-     * @param message the message that was sent
-     * @param topic the topic to which the message was sent
-     */
-    private void logKafkaSend(String message, String topic) {
-        log.info("[Topic: {}] {}", topic, message);
-    }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Populates the city map with initial data.
      *

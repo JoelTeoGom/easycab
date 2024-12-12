@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/EncryptionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/EncryptionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/EcDeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/EcDeApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/DigitalEngineClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/DigitalEngineClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Registry/src/main/java/org/example/ec_registry/controller/TaxiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Registry/src/main/java/org/example/ec_registry/controller/TaxiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Registry/src/main/java/org/example/ec_registry/service/TaxiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Registry/src/main/java/org/example/ec_registry/service/TaxiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.pc1.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.pc1.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.pc2.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.pc2.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +136,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment">
+  <component name="RunManager" selected="Docker.docker-compose.pc3.yml: Compose Deployment">
     <configuration name="ECCustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="ec-customer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ec_customer.ECCustomerApplication" />
@@ -210,15 +210,10 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.pc2.yml.ec_central: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.pc3.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
-          <option name="services">
-            <list>
-              <option value="ec_central" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.pc2.yml" />
+          <option name="sourceFilePath" value="docker-compose.pc3.yml" />
         </settings>
       </deployment>
       <method v="2" />
@@ -250,11 +245,11 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc2.yml: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc3.yml.ec_registry: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
       <item itemvalue="Spring Boot.EcCtcApplication" />
       <item itemvalue="Spring Boot.EcRegistryApplication" />
       <item itemvalue="Spring Boot.ECCustomerApplication" />
@@ -264,11 +259,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.pc3.yml.ec_registry: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.pc2.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc3.yml.ec_registry: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -298,7 +293,9 @@
       <workItem from="1733837724772" duration="282000" />
       <workItem from="1733838051436" duration="212000" />
       <workItem from="1733838415312" duration="46419000" />
-      <workItem from="1733949601165" duration="3801000" />
+      <workItem from="1733949601165" duration="3938000" />
+      <workItem from="1734016988716" duration="166000" />
+      <workItem from="1734017181781" duration="4603000" />
     </task>
     <servers />
   </component>

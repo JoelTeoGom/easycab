@@ -8,6 +8,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+import java.security.KeyFactory;
+import java.security.PublicKey;
 
 /**
  * Service class for handling socket communication with EC_Central.
@@ -15,6 +19,9 @@ import java.net.Socket;
 @Service
 @Slf4j
 public class SocketService {
+
+    private final EncryptionService encryptionService;
+
     /**
      * Taxi token
      */
@@ -63,6 +70,10 @@ public class SocketService {
      */
     private DataInputStream inputStream;
 
+    public SocketService(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
+    }
+
     /**
      * Logs startup information including taxi ID, central IP, and port.
      */
@@ -79,7 +90,6 @@ public class SocketService {
         this.logStartupInfo();
         new Thread(() -> {
             while (true) {
-
 
                 try {
                     if (authenticate()) {
@@ -126,6 +136,8 @@ public class SocketService {
         outputStream.writeUTF(authMessage);
         log.info("Sent authentication message: {}", authMessage);
 
+        exchangePublicKeys();
+
         // Leer la respuesta del servidor
         String response = inputStream.readUTF();
         log.info("Received response: {}", response);
@@ -151,6 +163,35 @@ public class SocketService {
         }
         return false;
     }
+
+
+    /**
+     * Intercambia claves públicas con EC_Central durante la autenticación.
+     *
+     * @throws IOException si ocurre un error de E/S
+     */
+    private void exchangePublicKeys() throws IOException {
+        try {
+            // Enviar clave pública del taxi (EC_DE)
+            String taxiPublicKeyBase64 = Base64.getEncoder().encodeToString(encryptionService.getTaxiPublicKey().getEncoded());
+            outputStream.writeUTF(taxiPublicKeyBase64);
+            log.info("Sent taxi public key to EC_Central.");
+
+            // Recibir clave pública de Central
+            String centralPublicKeyBase64 = inputStream.readUTF();
+            byte[] centralPublicKeyBytes = Base64.getDecoder().decode(centralPublicKeyBase64);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            PublicKey centralPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(centralPublicKeyBytes));
+            encryptionService.setCentralPublicKey(centralPublicKey);
+            log.info("Received and stored EC_Central's public key.");
+        } catch (Exception e) {
+            log.error("Error during key exchange with EC_Central: {}", e.getMessage());
+            throw new IOException("Public key exchange failed", e);
+        }
+    }
+
+
+
 
     /**
      * Connects to the central server.

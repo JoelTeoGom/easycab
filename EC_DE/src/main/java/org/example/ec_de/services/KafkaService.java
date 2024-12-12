@@ -51,15 +51,7 @@ public class KafkaService {
         kafkaTemplate.send("taxi-directions", message);
     }
 
-    /**
-     * Listens for taxi status updates from the Kafka topic "taxi-status".
-     *
-     * @param message the message received from the Kafka topic
-     */
-    @KafkaListener(topics = "taxi-status", groupId = "group")
-    public void listenTaxiStatusUpdates(String message) {
-        log.info("Received Taxi Status Update: " + message);
-    }
+
 
     /**
      * Listens for client responses from a dynamically resolved Kafka topic.
