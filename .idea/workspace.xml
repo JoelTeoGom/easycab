@@ -5,31 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/docker-compose.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/logstash/pipeline/logstash.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/otel-collector-config.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/src/main/java/org/example/logginglibrary/logginglibrary/CustomLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/src/main/java/org/example/logginglibrary/logginglibrary/LoggingLibraryApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/src/main/java/org/example/logginglibrary/logginglibrary/config/LoggingLibraryAutoConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/src/main/resources/META-INF/spring.factories" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/src/main/resources/application.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EC_LOGGING/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2eb82501-af66-4521-8b22-aeb25b659655.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2eb82501-af66-4521-8b22-aeb25b659655.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/model/TaxiStatusDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/model/TaxiStatusDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Customer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Customer/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/model/TaxiStatusDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/model/TaxiStatusDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_CTC/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_CTC/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_CTC/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_CTC/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Customer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_LOGGING/logstash/pipeline/logstash.conf" beforeDir="false" afterPath="$PROJECT_DIR$/EC_LOGGING/logstash/pipeline/logstash.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_LOGGING/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_LOGGING/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.pc1.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.pc1.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.pc2.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.pc2.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <list id="956bf02e-6de2-49bc-9a06-9f1b590a966a" name="Changes by joelt" comment="">
+      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/EncryptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/EncryptionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,14 +42,45 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myAllFileTypesSelected" value="false" />
+    <option name="mySelectedFileTypes">
+      <set>
+        <option value="JAVA" />
+      </set>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "carlosmgarcia-02"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:JoelTeoGom/easycab.git",
+    "accountId": "69477803-2a31-402c-a446-389d94905c17"
+  }
+}]]></component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
   </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myAllFileTypesSelected" value="false" />
+    <option name="mySelectedFileTypes">
+      <set>
+        <option value="JAVA" />
+      </set>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -109,7 +139,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.EcDeApplication.executor": "Run",
     "Spring Boot.EcRegistryApplication.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/joelt/OneDrive/Escritorio/logging-library",
     "node.js.detected.package.eslint": "true",
@@ -295,7 +325,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>

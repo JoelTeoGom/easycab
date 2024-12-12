@@ -5,6 +5,10 @@ WORKDIR /build
 # Copy the parent pom.xml and the entire EC_Central module
 COPY pom.xml /build/pom.xml
 COPY EC_Central /build/EC_Central
+COPY EC_LOGGING /build/EC_LOGGING
+
+# Instalar la biblioteca logging-library primero
+RUN mvn -f /build/EC_LOGGING/pom.xml clean install -DskipTests
 
 # Build the EC_Central module
 RUN mvn -f /build/EC_Central/pom.xml clean package -DskipTests

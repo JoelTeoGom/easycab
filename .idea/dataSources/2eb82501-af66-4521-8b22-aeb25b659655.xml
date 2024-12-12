@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="easycab@localhost">
-  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.51">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
       <IntrospectionStateNumber>763</IntrospectionStateNumber>
@@ -4837,27 +4837,27 @@ false posixrules
       <OwnerName>postgres</OwnerName>
     </schema>
     <sequence id="263" parent="262" name="customer_id_seq">
-      <DasType>bigint|0s</DasType>
       <ObjectId>16394</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <OwnerName>postgres</OwnerName>
     </sequence>
     <sequence id="264" parent="262" name="location_id_seq">
-      <DasType>bigint|0s</DasType>
       <ObjectId>16414</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <OwnerName>postgres</OwnerName>
     </sequence>
     <sequence id="265" parent="262" name="taxi_id_seq">
-      <DasType>bigint|0s</DasType>
       <ObjectId>16404</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <OwnerName>postgres</OwnerName>
     </sequence>
     <table id="266" parent="262" name="customer">
@@ -4891,44 +4891,44 @@ false posixrules
       <OwnerName>postgres</OwnerName>
     </table>
     <column id="271" parent="266" name="id">
-      <DasType>bigint|0s</DasType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <SequenceId>16394</SequenceId>
       <TypeId>20</TypeId>
     </column>
     <column id="272" parent="266" name="identifier">
-      <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="273" parent="266" name="x">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="274" parent="266" name="y">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="275" parent="266" name="dest_identifier">
-      <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="276" parent="266" name="state">
-      <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <index id="277" parent="266" name="customer_pkey">
@@ -4965,17 +4965,17 @@ false posixrules
       <UnderlyingIndexId>16402</UnderlyingIndexId>
     </key>
     <column id="281" parent="267" name="customer_id">
-      <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
     <column id="282" parent="267" name="taxi_id">
-      <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <TypeId>20</TypeId>
     </column>
     <foreign-key id="283" parent="267" name="fk_customer">
@@ -5038,72 +5038,72 @@ taxi_id</ColNames>
       <UnderlyingIndexId>16429</UnderlyingIndexId>
     </key>
     <column id="291" parent="268" name="installed_rank">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="292" parent="268" name="version">
-      <DasType>varchar(50)|0s</DasType>
       <Position>2</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>varchar(50)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="293" parent="268" name="description">
-      <DasType>varchar(200)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>varchar(200)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="294" parent="268" name="type">
-      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>varchar(20)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="295" parent="268" name="script">
-      <DasType>varchar(1000)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>varchar(1000)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="296" parent="268" name="checksum">
-      <DasType>integer|0s</DasType>
       <Position>6</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="297" parent="268" name="installed_by">
-      <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>varchar(100)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="298" parent="268" name="installed_on">
-      <DasType>timestamp|0s</DasType>
       <DefaultExpression>now()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
     <column id="299" parent="268" name="execution_time">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="300" parent="268" name="success">
-      <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>10</Position>
       <StateNumber>736</StateNumber>
+      <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
     <index id="301" parent="268" name="flyway_schema_history_pk">
@@ -5127,32 +5127,32 @@ taxi_id</ColNames>
       <UnderlyingIndexId>16391</UnderlyingIndexId>
     </key>
     <column id="304" parent="269" name="id">
-      <DasType>bigint|0s</DasType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <SequenceId>16414</SequenceId>
       <TypeId>20</TypeId>
     </column>
     <column id="305" parent="269" name="identifier">
-      <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="306" parent="269" name="x">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="307" parent="269" name="y">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <index id="308" parent="269" name="location_pkey">
@@ -5189,51 +5189,51 @@ taxi_id</ColNames>
       <UnderlyingIndexId>16420</UnderlyingIndexId>
     </key>
     <column id="312" parent="270" name="id">
-      <DasType>bigint|0s</DasType>
       <IdentityKind>always</IdentityKind>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>bigint|0s</StoredType>
       <SequenceId>16404</SequenceId>
       <TypeId>20</TypeId>
     </column>
     <column id="313" parent="270" name="identifier">
-      <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="314" parent="270" name="available">
-      <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
     <column id="315" parent="270" name="x">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="316" parent="270" name="y">
-      <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="317" parent="270" name="dest_identifier">
-      <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="318" parent="270" name="state">
-      <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
       <StateNumber>737</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <index id="319" parent="270" name="taxi_pkey">
