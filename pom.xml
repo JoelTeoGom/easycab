@@ -27,7 +27,6 @@
         <module>EC_S</module>
         <module>EC_CTC</module>
         <module>EC_Registry</module>
-        <module>EC_LOGGING</module>
         <!-- Aquí puedes agregar otros módulos que tengas -->
     </modules>
 
@@ -38,11 +37,6 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>logging-library</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>

@@ -15,6 +15,8 @@ public class EncryptionService {
 
     private final KeyPair rsaKeyPair;
     private final ConcurrentHashMap<String, PublicKey> taxiPublicKeys = new ConcurrentHashMap<>();
+
+
     public EncryptionService() throws Exception {
         // Genera claves RSA (asimétricas)
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");

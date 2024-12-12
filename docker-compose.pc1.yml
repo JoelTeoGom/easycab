@@ -38,6 +38,7 @@ services:
     container_name: ec_customer_a
     environment:
       LOGSTASH_HOST: logstash
+      LOGSTASH_PORT: 5050
       SPRING_APPLICATION_NAME: EC_Customer_a
       SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.100.3:9092
       CLIENT_ID: "a"

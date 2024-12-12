@@ -14,6 +14,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
+import java.security.PublicKey;
+
 /**
  * Service class for handling Kafka operations related to taxi directions and status updates.
  */
@@ -28,6 +31,7 @@ public class KafkaService {
      */
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final SocketService socketService;
+    private final EncryptionService encryptionService;
 
     /**
      * ShortestPathFinder instance for calculating the taxi's path.
@@ -46,27 +50,68 @@ public class KafkaService {
      * @param direction the TaxiStatusDto containing the direction information
      */
     public void publishDirection(TaxiStatusDto direction) {
-        direction.setToken(socketService.getAuthToken());
-        // Formato: taxiId,x,y,status
-        String message = MappingUtils.map(direction);
-        log.info("Published Kafka event to taxi-directions: {}", message);
-        message = message+"#"+socketService.getAuthToken();
-        kafkaTemplate.send("taxi-directions", message);
-    }
+        try {
+            // Obtener la clave pública de Central
+            PublicKey centralPublicKey = encryptionService.getCentralPublicKey();
+            if (centralPublicKey == null) {
+                throw new IllegalArgumentException("Clave pública de Central no encontrada.");
+            }
 
+            // Convertir el DTO a String
+            direction.setToken(socketService.getAuthToken());
+            String message = MappingUtils.map(direction);
+
+            // Generar clave AES
+            SecretKey aesKey = encryptionService.generateAESKey();
+
+            // Cifrar el mensaje con AES
+            String encryptedMessage = encryptionService.encryptWithAES(message, aesKey);
+
+            // Cifrar la clave AES con RSA
+            String encryptedAESKey = encryptionService.encryptWithRSA(encryptionService.encodeKey(aesKey), centralPublicKey);
+
+            // Formar el payload: clave AES cifrada + mensaje cifrado
+            String payload = encryptedAESKey + "#" + encryptedMessage;
+
+            // Publicar el payload cifrado en Kafka
+            kafkaTemplate.send("taxi-directions", payload);
+            log.info("Published encrypted Kafka event to taxi-directions: {}", payload);
+
+        } catch (Exception e) {
+            log.error("Error encrypting or publishing message to taxi-directions: {}", e.getMessage());
+        }
+    }
 
 
     /**
      * Listens for client responses from a dynamically resolved Kafka topic.
      *
-     * @param customerStatus the message received from the Kafka topic
+     * @param encryptedPayload the message received from the Kafka topic
      */
     @KafkaListener(topics = "#{@taxiIdTopic}", groupId = "group")
-    public void listenToClientResponses(String customerStatus) {
-        log.debug("Recibido mensaje: {}", customerStatus);
+    public void listenToClientResponses(String encryptedPayload) {
+        log.debug("Recibido mensaje cifrado: {}", encryptedPayload);
 
         try {
-            CustomerStatusDto customerStatusDto = MappingUtils.mapFromString(customerStatus, CustomerStatusDto.class);
+
+            // Dividir el payload en clave AES cifrada y mensaje cifrado
+            String[] parts = encryptedPayload.split("#", 2);
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Payload inválido. Se esperaba clave AES y mensaje cifrados separados por '#'.");
+            }
+            String encryptedAESKey = parts[0];
+            String encryptedMessage = parts[1];
+
+            // Descifrar la clave AES con la clave privada del taxi
+            String aesKeyEncoded = encryptionService.decryptWithRSA(encryptedAESKey);
+            SecretKey aesKey = encryptionService.decodeKey(aesKeyEncoded);
+
+            // Descifrar el mensaje con AES
+            String decryptedMessage = encryptionService.decryptWithAES(encryptedMessage, aesKey);
+
+            // Mapear el mensaje descifrado a un objeto DTO
+            CustomerStatusDto customerStatusDto = MappingUtils.mapFromString(decryptedMessage, CustomerStatusDto.class);
+
             shortestPathFinder.setCurrentX(customerStatusDto.getX());
             shortestPathFinder.setCurrentY(customerStatusDto.getY());
 

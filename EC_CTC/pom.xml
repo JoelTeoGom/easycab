@@ -13,19 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>EC_CTC</name>
     <description>EC_CTC</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -38,8 +25,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>logging-library</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -65,20 +55,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!-- Asigna un classifier al JAR ejecutable -->
-                    <classifier>exec</classifier>
-                    <attach>true</attach>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

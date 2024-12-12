@@ -24,7 +24,11 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>logging-library</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

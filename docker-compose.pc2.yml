@@ -27,6 +27,9 @@ services:
       dockerfile: ./EC_Central/Dockerfile
     image: ec-central:latest
     environment:
+      LOGSTASH_HOST: logstash
+      LOGSTASH_PORT: 5050
+      SPRING_APPLICATION_NAME: EC_Central
       SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.100.100:5432/easycab
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
@@ -49,11 +52,16 @@ services:
       context: .
       dockerfile: ./EC_CTC/Dockerfile
     image: ec-ctc:latest
+    environment:
+      LOGSTASH_HOST: logstash
+      LOGSTASH_PORT: 5050
+      SPRING_APPLICATION_NAME: EC_CTC
     ports:
       - "8082:8082"
     networks:
       easycab_network:
         ipv4_address: 192.168.100.200
+      shared-network: {}
 
   nginx:
     build:
@@ -74,6 +82,7 @@ networks:
     ipam:
       config:
         - subnet: 192.168.100.0/24
-
+  shared-network:
+    external: true
 volumes:
   postgres_data:
