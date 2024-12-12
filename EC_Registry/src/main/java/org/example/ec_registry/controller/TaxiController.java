@@ -23,6 +23,7 @@ public class TaxiController {
         return ResponseEntity.ok("Taxi registered successfully.");
     }
 
+
     @DeleteMapping("/unregister/{id}")
     public ResponseEntity<String> deregisterTaxi(@PathVariable String id) {
         taxiService.unregisterTaxi(id);

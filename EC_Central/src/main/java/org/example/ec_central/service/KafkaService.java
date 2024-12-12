@@ -19,6 +19,7 @@ import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.net.Socket;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -194,10 +195,10 @@ public class KafkaService {
         List<Taxi> availableTaxis = taxiRepository.findAllByAvailable(true);
 
         for (Taxi taxi : availableTaxis) {
-            log.info("Taxi disponible: {}, connectedTaxis: {}", taxi.getIdentifier(), clientHandler.getConnectedTaxis());
+            log.info("Taxi disponible en DATABASE: {}, connectedTaxis con sockets(SIN COMPROBAR CONEXION): {}", taxi.getIdentifier(), clientHandler.getConnectedTaxis());
             if (clientHandler.getConnectedTaxis().containsKey(taxi.getIdentifier())) {
                 log.info("Taxi key: {}", taxi.getIdentifier());
-                if (clientHandler.getConnectedTaxis().get(taxi.getIdentifier()).isConnected()) {
+                if (isTaxiConnected(clientHandler.getConnectedTaxis().get(taxi.getIdentifier()))) {
                     log.info("Taxi conectado: {}", taxi.getIdentifier());
                     Optional<Location> location = locationRepository.findByIdentifier(destination);
                     if (location.isEmpty()) {
@@ -236,6 +237,26 @@ public class KafkaService {
         log.error("NOT CONTAINS");
         return false;
     }
+
+
+    /**
+     * Check if the taxi socket is still up.
+     *
+     * @param socket taxi Socket
+     * @return true if a taxi socket was successfully up, false otherwise
+     */
+
+    public boolean isTaxiConnected(Socket socket){
+
+        if (socket != null && socket.isConnected() && !socket.isClosed()) {
+            log.info("socket SI disponible {}", socket);
+            return true;
+        }
+
+        log.info("socket NO disponible {}", socket);
+        return false;
+    }
+
 
     /**
      * Listens for taxi directions from Kafka.

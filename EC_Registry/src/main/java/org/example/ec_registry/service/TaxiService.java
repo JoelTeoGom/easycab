@@ -20,7 +20,7 @@ public class TaxiService {
         if (taxiRepository.findByIdentifier(identifier).isPresent()) {
             throw new IllegalArgumentException("Taxi ya registrado");
         }
-
+        System.out.println("ID: -----------------"+identifier);
         Taxi taxi = new Taxi(
                 identifier,  // Identifier único
                 true,        // Disponible

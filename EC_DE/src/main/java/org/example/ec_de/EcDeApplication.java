@@ -53,8 +53,8 @@ public class EcDeApplication implements CommandLineRunner {
 
             DigitalEngineClient client = new DigitalEngineClient(registryUrl);
 
-            System.out.println("DANDO DE BAJA");
-            client.unregisterTaxi(taxiId);
+//            System.out.println("DANDO DE BAJA");
+//            client.registerTaxi(taxiId);
 
 
 
@@ -81,6 +81,7 @@ public class EcDeApplication implements CommandLineRunner {
                         break;
                     case 2:
                         client.unregisterTaxi(taxiId);
+                        socketService.closeConnection();
                         break;
                     case 3:
                         client.getTaxiStatus(taxiId);

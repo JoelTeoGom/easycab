@@ -79,13 +79,18 @@ public class SocketService {
         this.logStartupInfo();
         new Thread(() -> {
             while (true) {
+
+
                 try {
                     if (authenticate()) {
                         log.info("Successfully authenticated with EC_Central.");
                         keepAlive();
                     } else {
                         log.error("Failed to authenticate with EC_Central.");
+                        Thread.sleep(5000);
+
                     }
+
                 } catch (IOException e) {
                     log.error("Error during connection setup: {}", e.getMessage());
                     closeConnection();
@@ -95,6 +100,8 @@ public class SocketService {
                     } catch (InterruptedException interruptedException) {
                         log.error("Interrupted while waiting to reconnect: {}", interruptedException.getMessage());
                     }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }).start();

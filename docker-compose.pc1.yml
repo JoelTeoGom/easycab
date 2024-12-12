@@ -30,25 +30,25 @@ services:
       easycab_network:
         ipv4_address: 192.168.100.3
 
-#  ec_customer_a:
-#    build:
-#      context: .
-#      dockerfile: ./EC_Customer/Dockerfile
-#    image: ec-customer-a:latest
-#    container_name: ec_customer_a
-#    environment:
-#      SPRING_APPLICATION_NAME: EC_Customer_a
-#      SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.100.3:9092
-#      CLIENT_ID: "a"
-#      broker.address: 192.168.100.3:9092
-#      file: destinations1.txt
-#    ports:
-#      - "9001:8080"
-#    depends_on:
-#      - kafka
-#    networks:
-#      easycab_network:
-#        ipv4_address: 192.168.100.111
+  ec_customer_a:
+    build:
+      context: .
+      dockerfile: ./EC_Customer/Dockerfile
+    image: ec-customer-a:latest
+    container_name: ec_customer_a
+    environment:
+      SPRING_APPLICATION_NAME: EC_Customer_a
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.100.3:9092
+      CLIENT_ID: "a"
+      broker.address: 192.168.100.3:9092
+      file: destinations1.txt
+    ports:
+      - "9001:8080"
+    depends_on:
+      - kafka
+    networks:
+      easycab_network:
+        ipv4_address: 192.168.100.111
 
 #  ec_customer_b:
 #    build:

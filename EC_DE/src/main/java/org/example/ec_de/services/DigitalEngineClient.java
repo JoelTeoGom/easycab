@@ -41,15 +41,17 @@ public class DigitalEngineClient {
     }
 
     public void registerTaxi(String taxiId) throws Exception {
-        URI uri = new URI(registryUrl + "/register/" + taxiId);
+        URI uri = new URI(registryUrl + "/register");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
-                .PUT(HttpRequest.BodyPublishers.noBody())
+                .POST(HttpRequest.BodyPublishers.ofString("{\"id\": \"" + taxiId + "\"}"))
+                .header("Content-Type", "application/json")
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("Respuesta del servidor: " + response.body());
     }
+
 
     public void unregisterTaxi(String taxiId) throws Exception {
         URI uri = new URI(registryUrl + "/unregister/" + taxiId);
