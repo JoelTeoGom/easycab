@@ -8,11 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="EC_CENTRAL" />
+        <module name="EC_Registry" />
+        <module name="ec-customer" />
+        <module name="EC_LOGGING" />
         <module name="ec-s" />
         <module name="EC_CTC" />
         <module name="ec-de" />
-        <module name="EC_Registry" />
-        <module name="ec-customer" />
       </profile>
     </annotationProcessing>
   </component>
@@ -20,6 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="EC_CENTRAL" options="-parameters" />
       <module name="EC_CTC" options="-parameters" />
+      <module name="EC_LOGGING" options="-parameters" />
       <module name="EC_Registry" options="-parameters" />
       <module name="ec-customer" options="-parameters" />
       <module name="ec-de" options="-parameters" />

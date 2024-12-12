@@ -222,7 +222,6 @@ public class KafkaService {
             clientHandler.getConnectedTaxis().remove(identifier);
         }
         log.info("socket NO disponible {}", socket);
-
         return false;
     }
 
@@ -234,8 +233,11 @@ public class KafkaService {
      */
     @KafkaListener(topics = "taxi-directions", groupId = "group", containerFactory = "kafkaListenerContainerFactory")
     public void listenTaxiDirections(String taxiStatusMessage) {
+
+
         log.info("Received Taxi Status Update: {}", taxiStatusMessage);
         // Crear un nuevo objeto TaxiStatusDto usando el constructor
+
         TaxiStatusDto taxiStatusDto = MappingUtils.mapFromString(taxiStatusMessage, TaxiStatusDto.class);
 
         // Actualizar la localización del taxi en tu sistema

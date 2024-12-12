@@ -125,6 +125,7 @@ public class ClientHandler {
             PublicKey taxiPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(taxiPublicKeyBytes));
             encryptionService.registerTaxiPublicKey(taxiId, taxiPublicKey);
             log.info("Received and registered public key for taxi: {}", taxiId);
+            log.info("PUBLIC KEY: {}", taxiPublicKey);
 
             // Enviar la clave pública de Central al taxi
             String centralPublicKeyBase64 = Base64.getEncoder().encodeToString(encryptionService.getCentralPublicKey().getEncoded());

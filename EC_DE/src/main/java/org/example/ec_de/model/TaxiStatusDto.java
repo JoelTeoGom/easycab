@@ -36,4 +36,7 @@ public class TaxiStatusDto {
      */
     private TaxiState status;
 
+    private String token;
+
+
 }

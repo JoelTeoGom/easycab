@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/../EC_LOGGING/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../EC_LOGGING/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_CTC/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_CTC/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_Central/src/main/java" charset="UTF-8" />
@@ -8,6 +10,8 @@
     <file url="file://$PROJECT_DIR$/EC_Customer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_Customer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_DE/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/EC_LOGGING/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/EC_LOGGING/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_Registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_Registry/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EC_S/src/main/java" charset="UTF-8" />

@@ -183,7 +183,7 @@ public class SocketService {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PublicKey centralPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(centralPublicKeyBytes));
             encryptionService.setCentralPublicKey(centralPublicKey);
-            log.info("Received and stored EC_Central's public key.");
+            log.info("Received and stored EC_Central's public key.{}", centralPublicKey);
         } catch (Exception e) {
             log.error("Error during key exchange with EC_Central: {}", e.getMessage());
             throw new IOException("Public key exchange failed", e);

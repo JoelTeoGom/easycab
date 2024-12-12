@@ -1,0 +1,8 @@
+management:
+  tracing:
+    enabled: true
+  metrics:
+    export:
+      otlp:
+        enabled: true
+        endpoint: http://localhost:4317

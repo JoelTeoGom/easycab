@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Definición de colores personalizados -->
+    <property scope="context" name="COLORIZER_COLORS" value="red@,yellow@,green@,blue@,cyan@"/>
+    <conversionRule conversionWord="colorize" converterClass="org.tuxdude.logback.extensions.LogColorizer"/>
+
+    <!-- Appender para enviar logs a Logstash -->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!-- Usar variable de entorno para la dirección de Logstash -->
+        <destination>${LOGSTASH_HOST:-localhost}:${LOGSTASH_PORT:-5050}</destination> <!-- Dirección de Logstash -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"service":"${SPRING_APPLICATION_NAME:-undefined-service}"}</customFields>
+        </encoder>
+    </appender>
+
+    <!-- Console appender para desarrollo con colores y clase del logger -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%colorize(%-5level)] %magenta(${spring.application.name:-undefined-service}) [%boldCyan(traceId: %X{traceId}) %boldBlue(spanId: %X{spanId})] [%logger{36}] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger de root -->
+    <root level="INFO">
+        <appender-ref ref="LOGSTASH"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

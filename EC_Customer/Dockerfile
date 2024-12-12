@@ -4,6 +4,7 @@ WORKDIR /build
 
 # Copiar el pom.xml del proyecto padre y los módulos
 COPY pom.xml /build/pom.xml
+COPY EC_LOGGING /build/EC_LOGGING
 COPY EC_Central /build/EC_Central
 COPY EC_DE /build/EC_DE
 COPY EC_Customer /build/EC_Customer

@@ -27,6 +27,7 @@ public class KafkaService {
      * KafkaTemplate for sending messages to Kafka topics.
      */
     private final KafkaTemplate<String, String> kafkaTemplate;
+    private final SocketService socketService;
 
     /**
      * ShortestPathFinder instance for calculating the taxi's path.
@@ -45,9 +46,11 @@ public class KafkaService {
      * @param direction the TaxiStatusDto containing the direction information
      */
     public void publishDirection(TaxiStatusDto direction) {
+        direction.setToken(socketService.getAuthToken());
         // Formato: taxiId,x,y,status
         String message = MappingUtils.map(direction);
         log.info("Published Kafka event to taxi-directions: {}", message);
+        message = message+"#"+socketService.getAuthToken();
         kafkaTemplate.send("taxi-directions", message);
     }
 
@@ -80,16 +83,16 @@ public class KafkaService {
 
                     TaxiStatusDto taxiStatusDto;
                     if (shortestPathFinder.getTaxiState() == TaxiState.RETURNING_TO_BASE) {
-                        taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.RETURNING_TO_BASE);
+                        taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.RETURNING_TO_BASE, null);
                     } else {
-                        taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.STOPPED);
+                        taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.STOPPED, null);
                     }
                     log.info("Enviando posición: " + xy[0] + "," + xy[1]);
                     publishDirection(taxiStatusDto);
                     Thread.sleep(1000);
                 }
 
-                TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(), shortestPathFinder.getCurrentY(), TaxiState.RETURNING_TO_BASE);
+                TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(), shortestPathFinder.getCurrentY(), TaxiState.RETURNING_TO_BASE, null);
                 log.info("Enviando posición: " + shortestPathFinder.getCurrentX() + "," + shortestPathFinder.getCurrentY());
                 publishDirection(taxiStatusDto);
                 return;
@@ -107,9 +110,9 @@ public class KafkaService {
 
                 TaxiStatusDto taxiStatusDto;
                 if (shortestPathFinder.getTaxiState() == TaxiState.EN_ROUTE_TO_PICKUP) {
-                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.EN_ROUTE_TO_PICKUP);
+                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.EN_ROUTE_TO_PICKUP, null);
                 } else {
-                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.STOPPED);
+                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.STOPPED, null);
                 }
                 log.info("Enviando posición: " + xy[0] + "," + xy[1]);
                 publishDirection(taxiStatusDto);
@@ -122,7 +125,8 @@ public class KafkaService {
                 TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId,
                         shortestPathFinder.getCurrentX(),
                         shortestPathFinder.getCurrentY(),
-                        TaxiState.PICKUP);
+                        TaxiState.PICKUP,
+                        null);
                 log.info("Enviando posición: " + shortestPathFinder.getCurrentX() + "," + shortestPathFinder.getCurrentY());
                 publishDirection(taxiStatusDto);
                 shortestPathFinder.setTaxiState(TaxiState.EN_ROUTE_TO_DESTINATION);
@@ -133,9 +137,9 @@ public class KafkaService {
 
                 TaxiStatusDto taxiStatusDto;
                 if (shortestPathFinder.getTaxiState() == TaxiState.EN_ROUTE_TO_DESTINATION) {
-                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.EN_ROUTE_TO_DESTINATION);
+                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.EN_ROUTE_TO_DESTINATION, null);
                 } else {
-                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.STOPPED);
+                    taxiStatusDto = new TaxiStatusDto(taxiId, xy[0], xy[1], TaxiState.STOPPED, null);
                 }
 
                 publishDirection(taxiStatusDto);
@@ -151,7 +155,7 @@ public class KafkaService {
 
             shortestPathFinder.setTaxiState(TaxiState.DESTINATION_REACHED);
 
-            TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(), shortestPathFinder.getCurrentY(), TaxiState.DESTINATION_REACHED);
+            TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(), shortestPathFinder.getCurrentY(), TaxiState.DESTINATION_REACHED, null);
             publishDirection(taxiStatusDto);
 
         } catch (NumberFormatException e) {

@@ -37,6 +37,7 @@ services:
     image: ec-customer-a:latest
     container_name: ec_customer_a
     environment:
+      LOGSTASH_HOST: logstash
       SPRING_APPLICATION_NAME: EC_Customer_a
       SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.100.3:9092
       CLIENT_ID: "a"
@@ -47,8 +48,8 @@ services:
     depends_on:
       - kafka
     networks:
-      easycab_network:
-        ipv4_address: 192.168.100.111
+      - shared-network
+      - easycab_network
 
 #  ec_customer_b:
 #    build:
@@ -75,5 +76,5 @@ networks:
     ipam:
       config:
         - subnet: 192.168.100.0/24
-
-
+  shared-network:
+    external: true

@@ -17,5 +17,6 @@ public class TaxiStatusDto {
     private int x;
     private int y;
     private TaxiState status;
+    private String token;
 
 }
