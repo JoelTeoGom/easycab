@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2eb82501-af66-4521-8b22-aeb25b659655.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Central/src/main/java/org/example/ec_central/service/KafkaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Customer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Customer/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_Customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_Customer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/KafkaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/src/main/java/org/example/ec_de/services/SocketService.java" afterDir="false" />
-    </list>
+    <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="" />
     <list id="956bf02e-6de2-49bc-9a06-9f1b590a966a" name="Changes by joelt" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,7 +323,7 @@
       <workItem from="1733949601165" duration="3938000" />
       <workItem from="1734016988716" duration="166000" />
       <workItem from="1734017181781" duration="13919000" />
-      <workItem from="1734089767962" duration="4470000" />
+      <workItem from="1734089767962" duration="5177000" />
     </task>
     <servers />
   </component>
