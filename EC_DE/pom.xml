@@ -47,11 +47,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>logging-library</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.example</groupId>-->
+<!--            <artifactId>logging-library</artifactId>-->
+<!--            <version>0.0.2-SNAPSHOT</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 

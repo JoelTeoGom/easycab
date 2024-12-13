@@ -259,7 +259,7 @@ public class KafkaService {
     /**
      * Listens for taxi directions from Kafka.
      *
-     * @param taxiStatusMessage the message containing the taxi status
+     * @param encryptedPayload the message containing the taxi status
      */
     @KafkaListener(topics = "taxi-directions", groupId = "group", containerFactory = "kafkaListenerContainerFactory")
     public void listenTaxiDirections(String encryptedPayload) {
@@ -283,7 +283,7 @@ public class KafkaService {
 
             // Mapear el mensaje descifrado a un objeto DTO
             TaxiStatusDto taxiStatusDto = MappingUtils.mapFromString(decryptedMessage, TaxiStatusDto.class);
-
+            log.info("transcription de encryptedPayload: {}", taxiStatusDto);
             // Validar el token
             String registeredToken = clientHandler.getTokenRegistry().get(taxiStatusDto.getTaxiId());
             if (registeredToken == null || !registeredToken.equals(taxiStatusDto.getToken())) {

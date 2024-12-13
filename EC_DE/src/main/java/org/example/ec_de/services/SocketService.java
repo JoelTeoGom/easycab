@@ -153,6 +153,7 @@ public class SocketService {
             // Verificar si la respuesta es un ACK con token
             if (parts.length == 2 && "ACK".equals(parts[0])) {
                 String token = parts[1];
+                this.authToken = token;
                 log.info("Authentication successful. Token: {}", token);
                 return true;
             } else {
@@ -211,14 +212,22 @@ public class SocketService {
     public void keepAlive() {
         try {
             while (true) {
+                if (socket == null || socket.isClosed() || !socket.isConnected()) {
+                    log.error("Connection lost. Attempting to reconnect...");
+                    closeConnection();
+                    initialize(); // Intentar reconectar
+                    break; // Sal del bucle y vuelve a iniciar la conexión
+                }
                 log.info("Connection is alive.");
                 Thread.sleep(5000);
             }
         } catch (InterruptedException e) {
-            log.error("Error in communication: " + e.getMessage());
+            log.error("Thread interrupted: {}", e.getMessage());
+            Thread.currentThread().interrupt(); // Restablece el estado interrumpido
             closeConnection();
         }
     }
+
 
     /**
      * Closes the socket connection.

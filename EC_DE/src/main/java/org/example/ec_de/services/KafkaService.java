@@ -59,6 +59,11 @@ public class KafkaService {
 
             // Convertir el DTO a String
             direction.setToken(socketService.getAuthToken());
+            log.info("TOKEN BEFORE SENDING : {}", socketService.getAuthToken());
+            log.info("TOKEN BEFORE SENDING : {}", socketService.getAuthToken());
+            log.info("TOKEN BEFORE SENDING : {}", socketService.getAuthToken());
+            log.info("TOKEN BEFORE SENDING : {}", socketService.getAuthToken());
+
             String message = MappingUtils.map(direction);
 
             // Generar clave AES
