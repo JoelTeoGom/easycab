@@ -6,7 +6,7 @@ ENV_FILE="../.env"
 # Función para mostrar el uso correcto del script
 mostrar_uso() {
   echo "Uso: $0 <tipo_pc> [numero_de_clientes_o_taxis]"
-  echo "tipo_pc: 1 (Kafka, Zookeeper y EC_Customer), 2 (Postgres, EC_Central, CTC, Nginx y logs), 3 (EC_Registry y EC_DE)"
+  echo "tipo_pc: 1 (Kafka, Zookeeper y EC_Customer), 2 (Postgres, EC_Central, CTC, Nginx y logging), 3 (EC_Registry y EC_DE)"
   echo "numero_de_clientes_o_taxis: Número de EC_Customer a generar para tipo_pc=1, o EC_DE a generar para tipo_pc=3"
   echo "Ejemplos:"
   echo "  $0 1 3  # Para tipo_pc=1 con 3 EC_Customer"
@@ -174,6 +174,8 @@ add_ec_ctc_service() {
     networks:
       - easycab_network
       - shared-network
+    depends_on:
+      - ec_central
 EOF
 }
 
@@ -218,7 +220,7 @@ add_logging_services() {
       - "9200:9200"
     networks:
       shared-network:
-        ipv4_address: 192.168.100.9
+        ipv4_address: 192.168.101.9
 
   logstash:
     image: logstash:8.9.0
@@ -232,7 +234,7 @@ add_logging_services() {
       - elasticsearch
     networks:
       shared-network:
-        ipv4_address: 192.168.100.10
+        ipv4_address: 192.168.101.10
 
   kibana:
     image: kibana:8.9.0
@@ -245,7 +247,7 @@ add_logging_services() {
       - elasticsearch
     networks:
       shared-network:
-        ipv4_address: 192.168.100.11
+        ipv4_address: 192.168.101.11
 EOF
 }
 
@@ -405,7 +407,7 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.100.0/24
+        - subnet: 192.168.101.0/24
 EOF
 
 echo "Archivo ${DOCKER_COMPOSE_FILE} creado con éxito."
