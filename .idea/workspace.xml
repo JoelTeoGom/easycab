@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="" />
+    <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2eb82501-af66-4521-8b22-aeb25b659655.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2eb82501-af66-4521-8b22-aeb25b659655.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_CTC/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_CTC/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_CTC/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_CTC/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_CTC/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_CTC/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.pc2.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.pc2.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taxi-tracker-nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/taxi-tracker-nginx/nginx.conf" afterDir="false" />
+    </list>
     <list id="956bf02e-6de2-49bc-9a06-9f1b590a966a" name="Changes by joelt" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +171,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment">
+  <component name="RunManager" selected="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment">
     <configuration name="ECCustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="ec-customer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ec_customer.ECCustomerApplication" />
@@ -250,30 +258,35 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.pc3.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker-compose.pc3.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.pc3.yml.ec_de_2: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.pc2.yml.ec_ctc: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
-              <option value="ec_de_2" />
+              <option value="ec_ctc" />
             </list>
           </option>
-          <option name="sourceFilePath" value="docker-compose.pc3.yml" />
+          <option name="sourceFilePath" value="docker-compose.pc2.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.pc2.yml.nginx: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="nginx" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.pc2.yml" />
         </settings>
       </deployment>
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_2: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc2.yml.nginx: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc2.yml: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
@@ -286,11 +299,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc2.yml.nginx: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.pc2.yml: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_2: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -323,7 +336,8 @@
       <workItem from="1733949601165" duration="3938000" />
       <workItem from="1734016988716" duration="166000" />
       <workItem from="1734017181781" duration="13919000" />
-      <workItem from="1734089767962" duration="5177000" />
+      <workItem from="1734089767962" duration="5219000" />
+      <workItem from="1734203439643" duration="2768000" />
     </task>
     <servers />
   </component>
