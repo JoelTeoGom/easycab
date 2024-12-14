@@ -259,7 +259,7 @@ public class KafkaService {
     /**
      * Listens for taxi directions from Kafka.
      *
-     * @param taxiStatusMessage the message containing the taxi status
+     * @param encryptedPayload the message containing the taxi status
      */
     @KafkaListener(topics = "taxi-directions", groupId = "group", containerFactory = "kafkaListenerContainerFactory")
     public void listenTaxiDirections(String encryptedPayload) {
