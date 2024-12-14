@@ -18,7 +18,8 @@ import javax.crypto.SecretKey;
 import java.security.PublicKey;
 
 /**
- * Service class for handling Kafka operations related to taxi directions and status updates.
+ * Service class for handling Kafka operations related to taxi directions and
+ * status updates.
  */
 @Service
 @Slf4j
@@ -59,6 +60,8 @@ public class KafkaService {
 
             // Convertir el DTO a String
             direction.setToken(socketService.getAuthToken());
+            log.info("TOKEN BEFORE SENDING : {}", socketService.getAuthToken());
+
             String message = MappingUtils.map(direction);
 
             // Generar clave AES
@@ -68,7 +71,8 @@ public class KafkaService {
             String encryptedMessage = encryptionService.encryptWithAES(message, aesKey);
 
             // Cifrar la clave AES con RSA
-            String encryptedAESKey = encryptionService.encryptWithRSA(encryptionService.encodeKey(aesKey), centralPublicKey);
+            String encryptedAESKey = encryptionService.encryptWithRSA(encryptionService.encodeKey(aesKey),
+                    centralPublicKey);
 
             // Formar el payload: clave AES cifrada + mensaje cifrado
             String payload = encryptedAESKey + "#" + encryptedMessage;
@@ -81,7 +85,6 @@ public class KafkaService {
             log.error("Error encrypting or publishing message to taxi-directions: {}", e.getMessage());
         }
     }
-
 
     /**
      * Listens for client responses from a dynamically resolved Kafka topic.
@@ -97,7 +100,8 @@ public class KafkaService {
             // Dividir el payload en clave AES cifrada y mensaje cifrado
             String[] parts = encryptedPayload.split("#", 2);
             if (parts.length != 2) {
-                throw new IllegalArgumentException("Payload inválido. Se esperaba clave AES y mensaje cifrados separados por '#'.");
+                throw new IllegalArgumentException(
+                        "Payload inválido. Se esperaba clave AES y mensaje cifrados separados por '#'.");
             }
             String encryptedAESKey = parts[0];
             String encryptedMessage = parts[1];
@@ -118,7 +122,8 @@ public class KafkaService {
             // If taxi has to return to base, use this logic
             if (customerStatusDto.getStatus() == TaxiState.RETURNING_TO_BASE) {
                 shortestPathFinder.setTaxiState(TaxiState.RETURNING_TO_BASE);
-                while (shortestPathFinder.getTaxiState() == TaxiState.RETURNING_TO_BASE || shortestPathFinder.getTaxiState() == TaxiState.STOPPED) {
+                while (shortestPathFinder.getTaxiState() == TaxiState.RETURNING_TO_BASE
+                        || shortestPathFinder.getTaxiState() == TaxiState.STOPPED) {
                     int[] xy = shortestPathFinder.getNextPosition(1, 1);
 
                     if (shortestPathFinder.isStop()) {
@@ -137,16 +142,20 @@ public class KafkaService {
                     Thread.sleep(1000);
                 }
 
-                TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(), shortestPathFinder.getCurrentY(), TaxiState.RETURNING_TO_BASE, null);
-                log.info("Enviando posición: " + shortestPathFinder.getCurrentX() + "," + shortestPathFinder.getCurrentY());
+                TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(),
+                        shortestPathFinder.getCurrentY(), TaxiState.RETURNING_TO_BASE, null);
+                log.info("Enviando posición: " + shortestPathFinder.getCurrentX() + ","
+                        + shortestPathFinder.getCurrentY());
                 publishDirection(taxiStatusDto);
                 return;
             }
 
             shortestPathFinder.setTaxiState(TaxiState.EN_ROUTE_TO_PICKUP);
 
-            while (shortestPathFinder.getTaxiState() == TaxiState.EN_ROUTE_TO_PICKUP || shortestPathFinder.getTaxiState() == TaxiState.STOPPED) {
-                int[] xy = shortestPathFinder.getNextPosition(customerStatusDto.getCustomerX(), customerStatusDto.getCustomerY());
+            while (shortestPathFinder.getTaxiState() == TaxiState.EN_ROUTE_TO_PICKUP
+                    || shortestPathFinder.getTaxiState() == TaxiState.STOPPED) {
+                int[] xy = shortestPathFinder.getNextPosition(customerStatusDto.getCustomerX(),
+                        customerStatusDto.getCustomerY());
 
                 if (shortestPathFinder.isStop()) {
                     shortestPathFinder.setStop(false);
@@ -172,13 +181,16 @@ public class KafkaService {
                         shortestPathFinder.getCurrentY(),
                         TaxiState.PICKUP,
                         null);
-                log.info("Enviando posición: " + shortestPathFinder.getCurrentX() + "," + shortestPathFinder.getCurrentY());
+                log.info("Enviando posición: " + shortestPathFinder.getCurrentX() + ","
+                        + shortestPathFinder.getCurrentY());
                 publishDirection(taxiStatusDto);
                 shortestPathFinder.setTaxiState(TaxiState.EN_ROUTE_TO_DESTINATION);
             }
 
-            while (shortestPathFinder.getTaxiState() == TaxiState.EN_ROUTE_TO_DESTINATION || shortestPathFinder.getTaxiState() == TaxiState.STOPPED) {
-                int[] xy = shortestPathFinder.getNextPosition(customerStatusDto.getDestX(), customerStatusDto.getDestY());
+            while (shortestPathFinder.getTaxiState() == TaxiState.EN_ROUTE_TO_DESTINATION
+                    || shortestPathFinder.getTaxiState() == TaxiState.STOPPED) {
+                int[] xy = shortestPathFinder.getNextPosition(customerStatusDto.getDestX(),
+                        customerStatusDto.getDestY());
 
                 TaxiStatusDto taxiStatusDto;
                 if (shortestPathFinder.getTaxiState() == TaxiState.EN_ROUTE_TO_DESTINATION) {
@@ -200,7 +212,8 @@ public class KafkaService {
 
             shortestPathFinder.setTaxiState(TaxiState.DESTINATION_REACHED);
 
-            TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(), shortestPathFinder.getCurrentY(), TaxiState.DESTINATION_REACHED, null);
+            TaxiStatusDto taxiStatusDto = new TaxiStatusDto(taxiId, shortestPathFinder.getCurrentX(),
+                    shortestPathFinder.getCurrentY(), TaxiState.DESTINATION_REACHED, null);
             publishDirection(taxiStatusDto);
 
         } catch (NumberFormatException e) {
@@ -209,7 +222,7 @@ public class KafkaService {
             log.error("Formato de mensaje incorrecto: {}", e.getMessage());
         } catch (InterruptedException e) {
             log.error("Error al dormir el hilo: {}", e.getMessage());
-            Thread.currentThread().interrupt();  // Restaurar el estado interrumpido
+            Thread.currentThread().interrupt(); // Restaurar el estado interrumpido
         } catch (Exception e) {
             log.error("Error inesperado: {}", e.getMessage());
         }

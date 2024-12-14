@@ -64,6 +64,7 @@ services:
       - easycab_network
       - shared-network
 
+
   nginx:
     build:
       context: ./taxi-tracker-nginx

@@ -4,17 +4,17 @@ WORKDIR /build
 
 # Copiar el pom.xml del proyecto padre y los módulos
 COPY pom.xml /build/pom.xml
-COPY EC_LOGGING /build/EC_LOGGING
-COPY EC_Central /build/EC_Central
-COPY EC_DE /build/EC_DE
+#COPY EC_LOGGING /build/EC_LOGGING
+#COPY EC_Central /build/EC_Central
+#COPY EC_DE /build/EC_DE
 COPY EC_Customer /build/EC_Customer
-COPY EC_S /build/EC_S
-COPY EC_CTC /build/EC_CTC
-COPY EC_Registry /build/EC_Registry
+#COPY EC_S /build/EC_S
+#COPY EC_CTC /build/EC_CTC
+#COPY EC_Registry /build/EC_Registry
 
 
-# Instalar el proyecto padre para que esté disponible para los módulos
-RUN mvn -f /build/pom.xml clean install -DskipTests
+## Instalar el proyecto padre para que esté disponible para los módulos
+#RUN mvn -f /build/pom.xml clean install -DskipTests
 
 # Construir el módulo EC_Customer
 RUN mvn -f /build/EC_Customer/pom.xml clean package -DskipTests

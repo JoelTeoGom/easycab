@@ -6,6 +6,5 @@ spring:
     name: EC_CTC
 
 openweather:
-  api-key: fc7dfa9ead004c40d233219bf76f4122
+  api-key: 4a4e08cb0403851482d373f829101b9b
   endpoint: https://api.openweathermap.org/data/2.5/weather
-
