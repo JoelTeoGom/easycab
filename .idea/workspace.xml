@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8c5b401-c15d-402e-ace1-91795e06d5ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2eb82501-af66-4521-8b22-aeb25b659655.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deployment/generate_docker_compose.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deployment/generate_docker_compose.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_CTC/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_CTC/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_CTC/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/EC_CTC/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EC_DE/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/EC_DE/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.pc1.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.pc2.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.pc3.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/taxi-tracker-nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/taxi-tracker-nginx/nginx.conf" afterDir="false" />
     </list>
     <list id="956bf02e-6de2-49bc-9a06-9f1b590a966a" name="Changes by joelt" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -71,74 +78,74 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.EC_Registry/Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc1.yml.ec_customer_a: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc1.yml.kafka: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc1.yml.zookeeper: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc1.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc2.yml.ec_central: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc2.yml.nginx: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc2.yml.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc2.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc3.yml.ec_de_2: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc3.yml.ec_de_3: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc3.yml.ec_registry: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.pc3.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.taxi-tracker-nginx/Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_CENTRAL [clean,compile,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_CENTRAL [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_CTC [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_Registry [clean,compile,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_Registry [clean,install,-DskipTests].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_Registry [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_Registry [clean,package,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_Registry [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_Registry [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.EC_Registry [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.easy-cab [-f,/build/EC_DE/pom.xml,clean...].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.easy-cab [clean,compile,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.easy-cab [clean,install,-DskipTests].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.easy-cab [clean,install,-U].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.easy-cab [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.easy-cab [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.easy-cab [rm,-rf...].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ec-customer [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ec-de [clean,compile,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ec-de [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.ec-de [clean,package,install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.EcDeApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.EcRegistryApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/joelt/OneDrive/Escritorio/logging-library&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.EC_Registry/Dockerfile.executor": "Run",
+    "Docker.docker-compose.pc1.yml.ec_customer_a: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc1.yml.kafka: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc1.yml.zookeeper: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc1.yml: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc2.yml.ec_central: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc2.yml.nginx: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc2.yml.postgres: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc2.yml: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc3.yml.ec_de_2: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc3.yml.ec_de_3: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc3.yml.ec_registry: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.pc3.yml: Compose Deployment.executor": "Run",
+    "Docker.taxi-tracker-nginx/Dockerfile.executor": "Run",
+    "Maven.EC_CENTRAL [clean,compile,install].executor": "Run",
+    "Maven.EC_CENTRAL [clean,install].executor": "Run",
+    "Maven.EC_CTC [clean,install].executor": "Run",
+    "Maven.EC_Registry [clean,compile,install].executor": "Run",
+    "Maven.EC_Registry [clean,install,-DskipTests].executor": "Run",
+    "Maven.EC_Registry [clean,install].executor": "Run",
+    "Maven.EC_Registry [clean,package,install].executor": "Run",
+    "Maven.EC_Registry [clean,package].executor": "Run",
+    "Maven.EC_Registry [clean].executor": "Run",
+    "Maven.EC_Registry [install].executor": "Run",
+    "Maven.easy-cab [-f,/build/EC_DE/pom.xml,clean...].executor": "Run",
+    "Maven.easy-cab [clean,compile,install].executor": "Run",
+    "Maven.easy-cab [clean,install,-DskipTests].executor": "Run",
+    "Maven.easy-cab [clean,install,-U].executor": "Run",
+    "Maven.easy-cab [clean,install].executor": "Run",
+    "Maven.easy-cab [deploy].executor": "Run",
+    "Maven.easy-cab [rm,-rf...].executor": "Run",
+    "Maven.ec-customer [clean,install].executor": "Run",
+    "Maven.ec-de [clean,compile,install].executor": "Run",
+    "Maven.ec-de [clean,install].executor": "Run",
+    "Maven.ec-de [clean,package,install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.EcDeApplication.executor": "Run",
+    "Spring Boot.EcRegistryApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/joelt/OneDrive/Escritorio/logging-library",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\joelt\OneDrive\Escritorio\easy-cab-prac-master\EC_DE\src\main\java\org\example\ec_de" />
@@ -166,7 +173,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.pc1.yml: Compose Deployment">
+  <component name="RunManager" selected="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment">
     <configuration name="ECCustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="ec-customer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ec_customer.ECCustomerApplication" />
@@ -232,12 +239,20 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.pc2.yml.ec_central: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.pc2.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.pc2.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.pc2.yml.ec_ctc: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
-              <option value="ec_central" />
+              <option value="ec_ctc" />
             </list>
           </option>
           <option name="sourceFilePath" value="docker-compose.pc2.yml" />
@@ -245,12 +260,12 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.pc2.yml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.pc2.yml.nginx: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
-              <option value="postgres" />
+              <option value="nginx" />
             </list>
           </option>
           <option name="sourceFilePath" value="docker-compose.pc2.yml" />
@@ -266,25 +281,12 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.pc3.yml.ec_de_1: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="ec_de_1" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.pc3.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <list>
+      <item itemvalue="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc2.yml.nginx: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.pc2.yml: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.pc2.yml.postgres: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
       <item itemvalue="Spring Boot.EcCtcApplication" />
       <item itemvalue="Spring Boot.EcRegistryApplication" />
       <item itemvalue="Spring Boot.ECCustomerApplication" />
@@ -294,10 +296,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.pc2.yml.ec_ctc: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc2.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.pc1.yml: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.pc2.yml.postgres: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.pc3.yml.ec_de_1: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.pc2.yml.ec_central: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.pc2.yml.nginx: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.pc3.yml: Compose Deployment" />
       </list>
     </recent_temporary>

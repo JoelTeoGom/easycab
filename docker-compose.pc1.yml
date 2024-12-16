@@ -2,17 +2,22 @@ version: '3.9'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
     ports:
       - "2181:2181"
     networks:
-      - easycab_network
+      easycab_network:
+        ipv4_address: 192.168.0.2
+
   kafka:
     image: confluentinc/cp-kafka:latest
+    container_name: kafka
     environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.112.153.217:9092
-      KAFKA_ZOOKEEPER_CONNECT: 10.112.153.217:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.3:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.0.2:2181
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -22,58 +27,32 @@ services:
     depends_on:
       - zookeeper
     networks:
-      - easycab_network
+      easycab_network:
+        ipv4_address: 192.168.0.3
+
   ec_customer_a:
     build:
       context: .
       dockerfile: ./EC_Customer/Dockerfile
-    image: ec-customer:latest
+    image: ec-customer-a:latest
+    container_name: ec_customer_a
     environment:
       SPRING_APPLICATION_NAME: EC_Customer_a
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: 10.112.153.217:9092
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: 192.168.0.3:9092
       CLIENT_ID: "a"
-      broker.address: 10.112.153.217:9092
+      broker.address: 192.168.0.3:9092
       file: destinations1.txt
     ports:
       - "9001:8080"
     depends_on:
       - kafka
     networks:
-      easycab_network:
-        ipv4_address: 192.168.100.201
-  ec_customer_b:
-    build:
-      context: .
-      dockerfile: ./EC_Customer/Dockerfile
-    image: ec-customer:latest
-    environment:
-      SPRING_APPLICATION_NAME: EC_Customer_b
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: 10.112.153.217:9092
-      CLIENT_ID: "b"
-      broker.address: 10.112.153.217:9092
-      file: destinations2.txt
-    ports:
-      - "9002:8080"
-    depends_on:
-      - kafka
-    networks:
-      easycab_network:
-        ipv4_address: 192.168.100.202
-volumes:
-  postgres_data:
-  server:
-  shared:
-  client:
-  esdata:
+      - easycab_network
+
 
 networks:
   easycab_network:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.100.0/24
-  shared-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.101.0/24
+        - subnet: 192.168.0.0/24

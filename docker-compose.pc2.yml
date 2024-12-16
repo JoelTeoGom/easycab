@@ -1,10 +1,10 @@
 services:
 
-#docker-compose -f docker-compose.pc2.yml down --volumes --remove-orphans
+  #docker-compose -f docker-compose.pc2.yml down --volumes --remove-orphans
 
-#  docker-compose -f docker-compose.pc1.yml up --build -d
-#  docker-compose -f docker-compose.pc2.yml up --build -d
-#  docker-compose -f docker-compose.pc3.yml up --build -d
+  #  docker-compose -f docker-compose.pc1.yml up --build -d
+  #  docker-compose -f docker-compose.pc2.yml up --build -d
+  #  docker-compose -f docker-compose.pc3.yml up --build -d
 
   postgres:
     image: postgres:14
@@ -17,7 +17,7 @@ services:
       - "5432:5432"
     networks:
       easycab_network:
-        ipv4_address: 192.168.100.100
+        ipv4_address: 192.168.0.100
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -30,21 +30,19 @@ services:
       LOGSTASH_HOST: logstash
       LOGSTASH_PORT: 5050
       SPRING_APPLICATION_NAME: EC_Central
-      SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.100.100:5432/easycab
+      SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.0.100:5432/easycab
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.0.3:9092
       SERVER_PORT: 8081
-      BROKER_ADDRESS: 192.168.100.3:9092
-      CTC_URL: http://192.168.100.200:8082/traffic
+      BROKER_ADDRESS: 192.168.0.3:9092
+      CTC_URL: http://192.168.0.200:8082/traffic
     ports:
       - "8081:8081"
       - "9090:9090"
     networks:
       easycab_network:
-        ipv4_address: 192.168.100.4
-      shared-network: {}
-
+        ipv4_address: 192.168.0.4
     depends_on:
       - postgres
 
@@ -54,16 +52,11 @@ services:
       context: .
       dockerfile: ./EC_CTC/Dockerfile
     image: ec-ctc:latest
-    environment:
-      LOGSTASH_HOST: logstash
-      LOGSTASH_PORT: 5050
-      SPRING_APPLICATION_NAME: EC_CTC
     ports:
       - "8082:8082"
     networks:
-      - easycab_network
-      - shared-network
-
+      easycab_network:
+        ipv4_address: 192.168.0.200
 
   nginx:
     build:
@@ -74,7 +67,7 @@ services:
       - "8080:80"
     networks:
       easycab_network:
-        ipv4_address: 192.168.100.14
+        ipv4_address: 192.168.0.17
     depends_on:
       - ec_central
 
@@ -83,6 +76,8 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.100.0/24
+        - subnet: 192.168.0.0/24
+  shared-network:
+    external: true
 volumes:
   postgres_data:
