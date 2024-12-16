@@ -143,7 +143,7 @@ add_ec_central_service() {
       SPRING_KAFKA_BOOTSTRAP-SERVERS: ${IP_PC_1}:9092
       SERVER_PORT: 8081
       BROKER_ADDRESS: ${IP_PC_1}:9092
-      CTC_URL: http://192.168.100.200:8082/traffic
+      CTC_URL: http://${IP_PC_2}:8082/traffic
     ports:
       - "8081:8081"
       - "9090:9090"

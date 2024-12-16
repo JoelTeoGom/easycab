@@ -195,7 +195,7 @@ public class KafkaService {
             log.info("Taxi disponible en DATABASE: {}, connectedTaxis con sockets(SIN COMPROBAR CONEXION): {}", taxi.getIdentifier(), clientHandler.getConnectedTaxis());
             if (clientHandler.getConnectedTaxis().containsKey(taxi.getIdentifier())) {
                 log.info("Taxi key: {}", taxi.getIdentifier());
-                if (isTaxiConnected(clientHandler.getConnectedTaxis().get(taxi.getIdentifier()), taxi.getIdentifier())) {
+                if (clientHandler.getConnectedTaxis().get(taxi.getIdentifier()).isConnected()) {
                     log.info("Taxi conectado: {}", taxi.getIdentifier());
                     Optional<Location> location = locationRepository.findByIdentifier(destination);
                     if (location.isEmpty()) {

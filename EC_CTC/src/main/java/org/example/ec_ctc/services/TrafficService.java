@@ -1,11 +1,14 @@
 package org.example.ec_ctc.services;
 
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.example.ec_ctc.models.WeatherResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Slf4j
 public class TrafficService {
 
     @Value("${openweather.api-key}")
@@ -16,8 +19,14 @@ public class TrafficService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+
+    @PostConstruct
+    public void init() {
+        log.info("TrafficService initialized with endpoint: {}", endpoint);
+    }
     public String getTrafficStatus(String city) {
         String url = String.format("%s?q=%s&appid=%s&units=metric", endpoint, city, apiKey);
+
         System.out.println("TRAFIC STATUS");
         try {
             WeatherResponse response = restTemplate.getForObject(url, WeatherResponse.class);
