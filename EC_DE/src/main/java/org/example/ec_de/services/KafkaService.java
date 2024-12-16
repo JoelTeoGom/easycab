@@ -224,7 +224,7 @@ public class KafkaService {
             log.error("Error al dormir el hilo: {}", e.getMessage());
             Thread.currentThread().interrupt(); // Restaurar el estado interrumpido
         } catch (Exception e) {
-            log.error("Error inesperado: {}", e.getMessage());
+            log.error("Error inesperado: {}", e.getMessage(), e);
         }
     }
 }

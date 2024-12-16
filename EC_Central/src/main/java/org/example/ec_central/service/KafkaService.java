@@ -191,48 +191,41 @@ public class KafkaService {
 
         List<Taxi> availableTaxis = taxiRepository.findAllByAvailable(true);
 
-        for (Taxi taxi : availableTaxis) {
-            log.info("Taxi disponible en DATABASE: {}, connectedTaxis con sockets(SIN COMPROBAR CONEXION): {}", taxi.getIdentifier(), clientHandler.getConnectedTaxis());
-            if (clientHandler.getConnectedTaxis().containsKey(taxi.getIdentifier())) {
-                log.info("Taxi key: {}", taxi.getIdentifier());
-                if (clientHandler.getConnectedTaxis().get(taxi.getIdentifier()).isConnected()) {
-                    log.info("Taxi conectado: {}", taxi.getIdentifier());
-                    Optional<Location> location = locationRepository.findByIdentifier(destination);
-                    if (location.isEmpty()) {
-                        return false;
-                    }
-
-                    taxi.setAvailable(false);
-                    taxi.setDestIdentifier(customer.getIdentifier());
-                    taxi.setState(TaxiState.ASSIGNED); //asignat
-                    Taxi savedTaxi = taxiRepository.save(taxi);
-                    log.info("Taxi asignado: {}", savedTaxi.getIdentifier());
-
-                    CustomerStatusDto customerStatusDto = CustomerStatusDto.builder()
-                                                                  .customerX(customer.getX())
-                                                                  .customerY(customer.getY())
-                                                                  .x(taxi.getX())
-                                                                  .y(taxi.getY())
-                                                                  .taxiId(taxi.getIdentifier())
-                                                                  .status(taxi.getState())
-                                                                  .destX(location.get().getX())
-                                                                  .destY(location.get().getY())
-                                                                  .build();
-                    publishToTaxi(taxi, customerStatusDto);
-                    customerTaxiAssignmentRepository.deleteAllByIdTaxiId(taxi.getId());
-
-                    customerTaxiAssignmentService.createCustomerTaxiAssignment(customer.getId(), taxi.getId());
-                    return true;
-                } else{
-                    log.error("Taxi {} not connected, available socket IPs are: {}", taxi.getIdentifier(), clientHandler.getConnectedTaxis().values()
-                            .stream()
-                            .map(client -> client.getInetAddress().getHostAddress())
-                            .toList());
-                }
-            }
+        if (availableTaxis.isEmpty()) {
+            log.error("No hay taxis disponibles en la base de datos.");
+            return false;
         }
-        log.error("NOT CONTAINS");
-        return false;
+
+        Optional<Location> location = locationRepository.findByIdentifier(destination);
+        if (location.isEmpty()) {
+            log.error("Destino {} no encontrado en la base de datos.", destination);
+            return false;
+        }
+
+        // Asignar el primer taxi disponible
+        Taxi taxi = availableTaxis.get(0);
+        taxi.setAvailable(false);
+        taxi.setDestIdentifier(customer.getIdentifier());
+        taxi.setState(TaxiState.ASSIGNED);
+        Taxi savedTaxi = taxiRepository.save(taxi);
+        log.info("Taxi asignado: {}", savedTaxi.getIdentifier());
+
+        CustomerStatusDto customerStatusDto = CustomerStatusDto.builder()
+                                                      .customerX(customer.getX())
+                                                      .customerY(customer.getY())
+                                                      .x(taxi.getX())
+                                                      .y(taxi.getY())
+                                                      .taxiId(taxi.getIdentifier())
+                                                      .status(taxi.getState())
+                                                      .destX(location.get().getX())
+                                                      .destY(location.get().getY())
+                                                      .build();
+
+        publishToTaxi(taxi, customerStatusDto);
+        customerTaxiAssignmentRepository.deleteAllByIdTaxiId(taxi.getId());
+
+        customerTaxiAssignmentService.createCustomerTaxiAssignment(customer.getId(), taxi.getId());
+        return true;
     }
 
 

@@ -102,8 +102,6 @@ public class ClientHandler {
 
                 handleTaxiRequests(inputStream, outputStream, id);
 
-                connectedTaxis.remove(id);
-                tokenRegistry.remove(id);
             } else {
                 outputStream.writeUTF(messageHandler.buildAck(false)); // Respond with NACK if authentication fails
                 log.error("Taxi authentication failed.");
