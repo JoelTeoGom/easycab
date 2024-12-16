@@ -7,9 +7,6 @@ COPY pom.xml /build/pom.xml
 COPY EC_DE /build/EC_DE
 COPY EC_LOGGING /build/EC_LOGGING
 
-RUN mvn -f /build/pom.xml clean install -DskipTests
-# Build EC_DE
-RUN mvn -f /build/EC_DE/pom.xml clean package -DskipTests
 
 # Runtime stage
 FROM eclipse-temurin:21-jre

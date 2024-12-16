@@ -1,11 +1,5 @@
+version: '3.9'
 services:
-
-#docker-compose -f docker-compose.pc2.yml down --volumes --remove-orphans
-
-#  docker-compose -f docker-compose.pc1.yml up --build -d
-#  docker-compose -f docker-compose.pc2.yml up --build -d
-#  docker-compose -f docker-compose.pc3.yml up --build -d
-
   postgres:
     image: postgres:14
     container_name: postgres_easycab
@@ -20,7 +14,6 @@ services:
         ipv4_address: 192.168.100.100
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
   ec_central:
     build:
       context: .
@@ -44,10 +37,8 @@ services:
       easycab_network:
         ipv4_address: 192.168.100.4
       shared-network: {}
-
     depends_on:
       - postgres
-
   ec_ctc:
     container_name: ec_ctc
     build:
@@ -63,8 +54,8 @@ services:
     networks:
       - easycab_network
       - shared-network
-
-
+    depends_on:
+      - ec_central
   nginx:
     build:
       context: ./taxi-tracker-nginx
@@ -78,11 +69,68 @@ services:
     depends_on:
       - ec_central
 
+  elasticsearch:
+    image: elasticsearch:8.9.0
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      shared-network:
+        ipv4_address: 192.168.101.9
+
+  logstash:
+    image: logstash:8.9.0
+    container_name: logstash
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    ports:
+      - "5050:5000"
+      - "5044:5044"
+    depends_on:
+      - elasticsearch
+    networks:
+      shared-network:
+        ipv4_address: 192.168.101.10
+
+  kibana:
+    image: kibana:8.9.0
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      shared-network:
+        ipv4_address: 192.168.101.11
+volumes:
+  postgres_data:
+  server:
+  shared:
+  client:
+  esdata:
+
 networks:
   easycab_network:
     driver: bridge
     ipam:
       config:
         - subnet: 192.168.100.0/24
-volumes:
-  postgres_data:
+  shared-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.101.0/24

@@ -137,12 +137,12 @@ add_ec_central_service() {
       LOGSTASH_HOST: logstash
       LOGSTASH_PORT: 5050
       SPRING_APPLICATION_NAME: EC_Central
-      SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.100.100:5432/easycab
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${IP_PC_2}:5432/easycab
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: ${IP_PC_1}:9092
       SERVER_PORT: 8081
-      BROKER_ADDRESS: 192.168.100.3:9092
+      BROKER_ADDRESS: ${IP_PC_1}:9092
       CTC_URL: http://192.168.100.200:8082/traffic
     ports:
       - "8081:8081"
@@ -186,6 +186,8 @@ add_nginx_service() {
     build:
       context: ./taxi-tracker-nginx
       dockerfile: Dockerfile
+      args:
+        - IP_PC_2=${IP_PC_2}
     container_name: taxi-tracker-nginx
     ports:
       - "8080:80"
@@ -226,7 +228,7 @@ add_logging_services() {
     image: logstash:8.9.0
     container_name: logstash
     volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./EC_LOGGING/logstash/pipeline:/usr/share/logstash/pipeline
     ports:
       - "5050:5000"
       - "5044:5044"
@@ -260,7 +262,7 @@ add_ec_registry_service() {
       dockerfile: EC_Registry/Dockerfile
     container_name: ec_registry
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.100.100:5432/easycab
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${IP_PC_2}:5432/easycab
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
