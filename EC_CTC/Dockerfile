@@ -5,10 +5,7 @@ WORKDIR /build
 # Copiar el archivo pom.xml del proyecto principal y los submódulos necesarios
 COPY pom.xml /build/pom.xml
 COPY EC_CTC /build/EC_CTC
-COPY EC_LOGGING /build/EC_LOGGING
 
-# Instalar la biblioteca logging-library primero
-RUN mvn -f /build/EC_LOGGING/pom.xml clean install -DskipTests
 
 # Descargar dependencias y construir el módulo EC_CTC
 RUN mvn -f /build/EC_CTC/pom.xml clean package -DskipTests

@@ -8,7 +8,7 @@ services:
     container_name: ec_registry
 
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.100.100:5432/easycab
+      SPRING_DATASOURCE_URL: jdbc:postgresql://192.168.0.100:5432/easycab
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
@@ -20,7 +20,7 @@ services:
       - "8443:8443"
     networks:
       easycab_network:
-        ipv4_address: 192.168.100.5
+        ipv4_address: 192.168.0.5
 
   ec_de_1:
     build:
@@ -32,12 +32,12 @@ services:
       - shared:/shared
     environment:
       SPRING_APPLICATION_NAME: EC_DE
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
-      CENTRAL_IP: 192.168.100.4
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.0.3:9092
+      CENTRAL_IP: 192.168.0.13
       CENTRAL_PORT: 8081
       TAXI_ID: 1
       SENSOR_PORT: 5001
-      REGISTRY_URL: https://192.168.100.5:8443/taxis
+      REGISTRY_URL: https://192.168.0.5:8443/taxis
     depends_on:
       - ec_registry
     ports:
@@ -46,7 +46,7 @@ services:
     tty: true
     networks:
       easycab_network:
-        ipv4_address: 192.168.100.101
+        ipv4_address: 192.168.0.101
 
   ec_de_2:
     build:
@@ -58,12 +58,12 @@ services:
       - shared:/shared
     environment:
       SPRING_APPLICATION_NAME: EC_DE
-      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.100.3:9092
-      CENTRAL_IP: 192.168.100.4
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: 192.168.0.3:9092
+      CENTRAL_IP: 192.168.0.13
       CENTRAL_PORT: 8081
       TAXI_ID: 2
       SENSOR_PORT: 5002
-      REGISTRY_URL: https://192.168.100.5:8443/taxis
+      REGISTRY_URL: https://192.168.0.5:8443/taxis
     ports:
       - "8002:8080"
     stdin_open: true
@@ -72,14 +72,14 @@ services:
       - ec_registry
     networks:
       easycab_network:
-        ipv4_address: 192.168.100.102
+        ipv4_address: 192.168.0.102
 
 networks:
   easycab_network:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.100.0/24
+        - subnet: 192.168.0.0/24
 
 volumes:
   server:
